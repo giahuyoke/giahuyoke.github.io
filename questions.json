@@ -1,0 +1,17 @@
+[
+    {
+        "question": "Hành vi bị nghiêm cấm khi sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về ATVSLĐ:",
+        "options": ["Chưa được kiểm định", "Không có nguồn gốc, xuất xứ rõ ràng", "Hết hạn kiểm định", "Tất cả các hành vi trên"],
+        "correctAnswerIndex": 3
+    },
+    {
+        "question": "Các hành vi nào sau đây bị nghiêm cấm:",
+        "options": ["Không thực hiện các yêu cầu, biện pháp bảo đảm an toàn, vệ sinh lao động gây tổn hại hoặc có nguy cơ gây tổn hại đến người, tài sản, môi trường", "Buộc người lao động phải làm việc hoặc không được rời khỏi nơi làm việc khi có nguy cơ xảy ra tai nạn lao động đe dọa nghiêm trọng sức khỏe, tính mạng của họ hoặc buộc người lao động tiếp tục làm việc khi các nguy cơ đó chưa được khắc phục", "Trả tiền thay cho việc bồi dưỡng bằng hiện vật", "Tất cả các hành vi nêu trên"],
+        "correctAnswerIndex": 3
+    },
+    {
+        "question": "Các hành vi nào sau đây bị nghiêm cấm:",
+        "options": ["Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không được kiểm định hoặc kết quả kiểm định không đạt yêu cầu hoặc không có nguồn gốc, xuất xứ rõ ràng, hết hạn sử dụng, không bảo đảm chất lượng, gây ô nhiễm môi trường", "Trốn đóng, chậm đóng tiền bảo hiểm tai nạn lao động, bệnh nghề nghiệp; chiếm dụng tiền đóng, hưởng bảo hiểm tai nạn lao động, bệnh nghề nghiệp; gian lận, giả mạo hồ sơ trong việc thực hiện bảo hiểm tai nạn lao động, bệnh nghề nghiệp", "Không chi trả chế độ bảo hiểm tai nạn lao động, bệnh nghề nghiệp cho người lao động; quản lý, sử dụng Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp không đúng quy định của pháp luật; truy cập, khai thác trái pháp luật cơ sở dữ liệu về bảo hiểm tai nạn lao động, bệnh nghề nghiệp", "Tất cả các hành vi nêu trên"],
+        "correctAnswerIndex": 3
+    }
+]

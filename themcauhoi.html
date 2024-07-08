@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập câu hỏi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nhập câu hỏi</h1>
+    <div>
+        <label for="question">Câu hỏi:</label>
+        <input type="text" id="question" required>
+    </div>
+    <div>
+        <label for="optionA">Đáp án A:</label>
+        <input type="text" id="optionA" required>
+    </div>
+    <div>
+        <label for="optionB">Đáp án B:</label>
+        <input type="text" id="optionB" required>
+    </div>
+    <div>
+        <label for="optionC">Đáp án C:</label>
+        <input type="text" id="optionC" required>
+    </div>
+    <div>
+        <label for="optionD">Đáp án D:</label>
+        <input type="text" id="optionD" required>
+    </div>
+    <div>
+        <label for="correctAnswer">Đáp án đúng (A=0, B=1, C=2, D=3):</label>
+        <input type="number" id="correctAnswer" min="0" max="3" required>
+    </div>
+    <button onclick="addQuestion()">Thêm câu hỏi</button>
+    <hr>
+    <h2>Danh sách câu hỏi</h2>
+    <ul id="questionList"></ul>
+    <button onclick="downloadQuestions()">Tải danh sách câu hỏi (JSON)</button>
+
+    <script src="script2.js"></script>
+</body>
+</html>
