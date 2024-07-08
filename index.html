@@ -2394,6 +2394,7 @@
         displayQuestion();
         displayQuestionNav();
         resetTimer(); // Reset timer khi bấm "Làm lại"
+        document.getElementById("wrongAnswersList").innerHTML = "";
 
         document.getElementById("startButton").textContent = "Bắt đầu làm bài";
         document.getElementById("startButton").onclick = startTimer;
