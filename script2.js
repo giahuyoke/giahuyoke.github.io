@@ -6,17 +6,19 @@ function addQuestion() {
   const optionB = sanitizeInput(document.getElementById("optionB").value);
   const optionC = sanitizeInput(document.getElementById("optionC").value);
   const optionD = sanitizeInput(document.getElementById("optionD").value);
-  const correctAnswerIndex = parseInt(
-    document.getElementById("correctAnswer").value
-  );
+
+  // Lấy giá trị của radio button được chọn
+  let correctAnswerIndex = -1;
+  for (let i = 0; i <= 3; i++) {
+    if (document.getElementById(`correctAnswer${i}`).checked) {
+      correctAnswerIndex = i;
+      break;
+    }
+  }
 
   // Kiểm tra tính hợp lệ của đáp án đúng
-  if (
-    isNaN(correctAnswerIndex) ||
-    correctAnswerIndex < 0 ||
-    correctAnswerIndex > 3
-  ) {
-    alert("Đáp án đúng phải là 0, 1, 2 hoặc 3");
+  if (correctAnswerIndex === -1) {
+    alert("Vui lòng chọn đáp án đúng");
     return;
   }
 
@@ -30,12 +32,14 @@ function addQuestion() {
   // Thêm câu hỏi vào danh sách và cập nhật giao diện
   questions.push(newQuestion);
   updateQuestionList();
+
+  // Xóa nội dung input và bỏ chọn radio button
   document.getElementById("question").value = "";
   document.getElementById("optionA").value = "";
   document.getElementById("optionB").value = "";
   document.getElementById("optionC").value = "";
   document.getElementById("optionD").value = "";
-  document.getElementById("correctAnswer").value = "";
+  document.querySelector('input[name="correctAnswer"]:checked').checked = false;
 }
 
 function updateQuestionList() {
@@ -78,6 +82,5 @@ function downloadQuestions() {
 }
 
 function sanitizeInput(input) {
-  // Sử dụng JSON.stringify để tránh lỗi khi có dấu nháy đơn hoặc kép trong dữ liệu
-  return JSON.stringify(input);
+  return JSON.stringify(input).replace(/^"|"$/g, "");
 }

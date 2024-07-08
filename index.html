@@ -117,6 +117,28 @@
         font-weight: bold;
         text-align: center;
       }
+      #wrongAnswersList {
+        margin-top: 20px;
+        list-style-type: decimal;
+        padding-left: 20px;
+      }
+      #wrongAnswersList li {
+        margin-bottom: 10px;
+      }
+      #timer {
+        font-size: 20px;
+        margin-top: 20px;
+        text-align: center;
+      }
+      .answer-option {
+        margin-bottom: 5px;
+      }
+      .answer-option.correct {
+        color: green;
+      }
+      .answer-option.incorrect {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -135,48 +157,1972 @@
       <div class="button-container">
         <button onclick="previousQuestion()" disabled>Câu trước đó</button>
         <button onclick="nextQuestion()" disabled>Câu kế tiếp</button>
-        <button onclick="calculateScore()">Tính điểm</button>
+        <button onclick="startTimer()" id="startButton">Bắt đầu làm bài</button>
         <button onclick="resetQuiz()">Làm lại</button>
       </div>
 
+      <div id="timer">00:00</div>
       <div id="score"></div>
+      <ul id="wrongAnswersList"></ul>
     </div>
 
     <script>
       const questionsData = [
         {
           question:
-            "Hành vi bị nghiêm cấm khi sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về ATVSLĐ:",
+            '"Hành vi bị nghiêm cấm khi sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về AT VSLĐ:"',
           options: [
-            "Chưa được kiểm định",
-            "Không có nguồn gốc, xuất xứ rõ ràng",
-            "Hết hạn kiểm định",
-            "Tất cả các hành vi trên",
+            '"Chưa được kiểm định;"',
+            '"Không có nguồn gốc, xuất xứ rõ ràng; "',
+            '"Hết hạn kiểm định;"',
+            '"Tất cả các hành vi trên."',
           ],
           correctAnswerIndex: 3,
         },
         {
-          question: "Các hành vi nào sau đây bị nghiêm cấm:",
+          question: '"Các hành vi nào sau đây bị nghiêm cấm:"',
           options: [
-            "Không thực hiện các yêu cầu, biện pháp bảo đảm an toàn, vệ sinh lao động gây tổn hại hoặc có nguy cơ gây tổn hại đến người, tài sản, môi trường",
-            "Buộc người lao động phải làm việc hoặc không được rời khỏi nơi làm việc khi có nguy cơ xảy ra tai nạn lao động đe dọa nghiêm trọng sức khỏe, tính mạng của họ hoặc buộc người lao động tiếp tục làm việc khi các nguy cơ đó chưa được khắc phục",
-            "Trả tiền thay cho việc bồi dưỡng bằng hiện vật",
-            "Tất cả các hành vi nêu trên",
+            '"Không thực hiện các yêu cầu, biện pháp bảo đảm an toàn, vệ sinh lao động gây tổn hại hoặc có nguy  cơ gây tổn hại đến người, tài sản, môi trường; "',
+            '"Buộc người lao động phải làm việc hoặc không được rời khỏi nơi làm việc khi có nguy cơ xảy ra tai  nạn lao động đe dọa nghiêm trọng sức khỏe, tính mạng của họ hoặc buộc người lao động tiếp tục  làm việc khi các nguy cơ đó chưa được khắc phục"',
+            '"Trả tiền thay cho việc bồi dưỡng bằng hiện vật. "',
+            '"Tất cả các hành vi nêu trên. "',
           ],
           correctAnswerIndex: 3,
         },
         {
-          question: "Các hành vi nào sau đây bị nghiêm cấm:",
+          question: '"Các hành vi nào sau đây bị nghiêm cấm: "',
           options: [
-            "Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không được kiểm định hoặc kết quả kiểm định không đạt yêu cầu hoặc không có nguồn gốc, xuất xứ rõ ràng, hết hạn sử dụng, không bảo đảm chất lượng, gây ô nhiễm môi trường",
-            "Trốn đóng, chậm đóng tiền bảo hiểm tai nạn lao động, bệnh nghề nghiệp; chiếm dụng tiền đóng, hưởng bảo hiểm tai nạn lao động, bệnh nghề nghiệp; gian lận, giả mạo hồ sơ trong việc thực hiện bảo hiểm tai nạn lao động, bệnh nghề nghiệp",
-            "Không chi trả chế độ bảo hiểm tai nạn lao động, bệnh nghề nghiệp cho người lao động; quản lý, sử dụng Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp không đúng quy định của pháp luật; truy cập, khai thác trái pháp luật cơ sở dữ liệu về bảo hiểm tai nạn lao động, bệnh nghề nghiệp",
-            "Tất cả các hành vi nêu trên",
+            '"Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không được  kiểm định hoặc kết quả kiểm định không đạt yêu cầu hoặc không có nguồn gốc, xuất xứ rõ ràng,  hết hạn sử dụng, không bảo đảm chất lượng, gây ô nhiễm môi trường."',
+            '"Trốn đóng, chậm đóng tiền bảo hiểm tai nạn lao động, bệnh nghề nghiệp; chiếm dụng tiền đóng,  hưởng bảo hiểm tai nạn lao động, bệnh nghề nghiệp; gian lận, giả mạo hồ sơ trong việc thực hiện  bảo hiểm tai nạn lao động, bệnh nghề nghiệp;"',
+            '"Không chi trả chế độ bảo hiểm tai nạn lao động, bệnh nghề nghiệp cho người lao động; quản lý, sử  dụng Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp không đúng quy định của pháp luật; truy  cập, khai thác trái pháp luật cơ sở dữ liệu về bảo hiểm tai nạn lao động, bệnh nghề nghiệp."',
+            '"Tất cả các hành vi nêu trên."',
           ],
           correctAnswerIndex: 3,
+        },
+        {
+          question: '"Các hành vi nào sau đây bị nghiêm cấm:  "',
+          options: [
+            '"Gian lận trong các hoạt động kiểm định, huấn luyện an toàn, vệ sinh lao động, quan trắc môi  trường lao động, giám định y khoa để xác định mức suy giảm khả năng lao động khi bị tai nạn lao  động, bệnh nghề nghiệp; "',
+            '"Cản trở, gây khó khăn hoặc làm thiệt hại đến quyền, lợi ích hợp pháp, chính đáng về an toàn, vệ  sinh lao động của người lao động, người sử dụng lao động. "',
+            '"Phân biệt đối xử về giới trong bảo đảm an toàn, vệ sinh lao động; phân biệt đối xử vì lý do người  lao động từ chối làm công việc hoặc rời bỏ nơi làm việc khi thấy rõ có nguy cơ xảy ra tai nạn lao  động đe dọa nghiêm trọng tính mạng hoặc sức khỏe của mình."',
+            '"Tất cả các hành vi nêu trên."',
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            '"Theo Luật AT-VSLĐ số 84/2015/QH13 ngày 25/06/2015, nội dung nào dưới đây thuộc về  “Trách nhiệm của Người lao động trong việc bảo đảm an toàn, vệ sinh lao động tại nơi làm việc”?"',
+          options: [
+            '"Chấp hành quy định, nội quy, quy trình, yêu cầu về AT-VSLĐ của NSDLĐ hoặc cơ quan nhà nước  có thẩm quyền ban hành liên quan đến công việc, nhiệm vụ được giao; "',
+            '"Ngăn chặn nguy cơ trực tiếp gây mất AT-VSLĐ, hành vi vi phạm quy định AT-VSLĐ tại nơi làm  việc;"',
+            '"Chủ động tham gia ứng cứu, khắc phục sự cố, tai nạn lao động theo phương án xử lý sự cố, ứng cứu  khẩn cấp hoặc khi có lệnh của NSDLĐ hoặc cơ quan nhà nước có thẩm quyền;"',
+            '"Cả a, b và c đều đúng."',
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            '"Trong các hoạt động sau đây, hoạt động nào là quyền của người sử dụng lao động: "',
+          options: [
+            '" Yêu cầu người lao động làm thêm giờ cho kịp tiến độ sản xuất mà không cần sự đồng ý của người  lao động."',
+            '"Huy động người lao động tham gia ứng cứu khẩn cấp, khắc phục sự cố, tai nạn lao động."',
+            '"Cấp phát tiền cho người lao động để người lao động tự trang bị phương tiện bảo vệ cá nhân."',
+            '"Sa thải nữ lao động vì vi phạm cam kết trong hợp đồng lao động là “ sau khi làm việc 2 năm mới  được kết hôn”. "',
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: '"Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:"',
+          options: [
+            '"Phân biệt đối xử vì lý do người lao động từ chối làm công việc trong điều kiện pháp luật cho phép."',
+            '"Không phát tiền thay cho việc trang cấp phương tiện bảo vệ cá nhân."',
+            '"Ngăn chặn nguy cơ trực tiếp gây mất AT-VSLĐ; "',
+            '"Huy động người lao động tham gia ứng cứu khẩn cấp, khắc phục sự cố, tai nạn lao động trong điều  kiện không có nguy cơ đe dọa đến tính mạng, sức khỏe NLĐ. "',
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: '"Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ: "',
+          options: [
+            '"Từ chối làm công việc hoặc rời bỏ nơi làm việc khi thấy rõ có nguy cơ xảy ra tai nạn lao động đe  dọa nghiêm trọng tính mạng hoặc sức khỏe của mình. "',
+            '"Cản trở, gây khó khăn hoặc làm thiệt hại đến quyền, lợi ích hợp pháp, chính đáng về an toàn, vệ sinh  lao động của người lao động, người sử dụng lao động. "',
+            '"Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc an toàn, vệ sinh, cải thiện điều kiện lao  động."',
+            '"Khiếu nại, tố cáo với cơ quan Nhà nước khi người sử dụng lao động vi phạm các qui định giao kết  về ATLĐ, VSLĐ. "',
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: '"Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:"',
+          options: [
+            '"Tham gia khóa học huấn luyện an toàn, vệ sinh lao động trước khi sử dụng các máy, thiết bị, vật  tư, chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động."',
+            '"Khiếu nại, tố cáo với cơ quan Nhà nước khi người sử dụng lao động vi phạm các qui định giao kết  về ATLĐ, VSLĐ"',
+            '"Gian lận trong các hoạt động kiểm định, huấn luyện an toàn, vệ sinh lao động."',
+            '"Rời bỏ nơi làm việc khi thấy rõ nguy cơ xảy ra TNLĐ và báo cáo với người trực tiếp quản lý biêt  lý do và các nguy cơ đó. "',
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: '"Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:"',
+          options: [
+            '"Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động có kết quả kiểm  định không đạt yêu cầu. "',
+            '"Sử dụng máy thiết bị vật tư đã kiểm định rồi nhưng chưa hoàn tất thủ tục hồ sơ. "',
+            '"Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không có nguồn  gốc, xuất xứ rõ ràng."',
+            '"Tất cả các hành vi nêu trên."',
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:",
+          options: [
+            "Ngăn chặn nguy cơ trực tiếp gây mất AT-VSLĐ, hành vi vi phạm quy định AT-VSLĐ tại nơi làm",
+            "Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không được kiểm",
+            "Từ chối làm công việc hoặc rời bỏ nơi làm việc khi thấy rõ có nguy cơ xảy ra tai nạn lao động đe",
+            "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc an toàn, vệ sinh, cải thiện điều kiện lao",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:",
+          options: [
+            "Từ chối làm việc khi thấy rõ nguy cơ xảy ra TNLĐ.",
+            "Khiếu nại, tố cáo với cơ quan Nhà nước khi người sử dụng lao động vi phạm các qui định giao kết",
+            "Làm công việc có yêu cầu nghiêm ngặt về ATVSLĐ khi chưa được huấn luyện, sát hạch và cấp",
+            "Rời bỏ nơi làm việc khi thấy rõ nguy cơ xảy ra TNLĐ và báo cáo với người trực tiếp quản lý biêt lý",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Luật An toàn, vệ sinh lao động số: 84/2015/QH13 ngày 25/06/2015, Người sử dụng lao  động khi thực hiện trang cấp phương tiện bảo vệ cá nhân phải bảo đảm nguyên tắc nào dưới đây?",
+          options: [
+            "Đúng chủng loại, đúng đối tượng, đủ số lượng, bảo đảm chất lượng theo tiêu chuẩn, quy chuẩn kỹ  thuật quốc gia;",
+            "Không phát tiền thay cho việc trang cấp phương tiện bảo vệ cá nhân; không buộc NLĐ tự mua  hoặc thu tiền của NLĐ để mua phương tiện bảo vệ cá nhân;",
+            "Hướng dẫn, giám sát người lao động sử dụng phương tiện bảo vệ cá nhân;",
+            "Các câu trả lời a, b và c đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Việc tổ chức kiểm tra, đánh giá các yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc để tiến  hành các biện pháp về công nghệ, kỹ thuật nhằm loại trừ, giảm thiểu yếu tố nguy hiểm, yếu tố có  hại tại nơi làm việc, cải thiện điều kiện lao động, chăm sóc sức khỏe cho người lao động theo quy  định phải diễn ra khi:",
+          options: [
+            "Khi cần thiết như sự cố, tai nạn nghiêm trọng xảy ra thường xuyên..",
+            "Hàng năm.",
+            "Khi thay đổi công nghệ hoặc môi trường lao động.",
+            "Tất cả các trường hợp nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trách nhiệm nào sau đây là trách nhiệm chung của cả người lao động và người sử dụng lao  động:",
+          options: [
+            "Xây dựng, ban hành kế hoạch xử lý sự cố, ứng cứu khẩn cấp tại nơi làm việc; tổ chức xử lý sự cố,  ứng cứu khẩn cấp, lực lượng ứng cứu.",
+            "Ngăn chặn nguy cơ trực tiếp gây mất an toàn, vệ sinh lao động, hành vi vi phạm quy định an toàn,  vệ sinh lao động tại nơi làm việc.",
+            "Tham gia khóa học huấn luyện an toàn, vệ sinh lao động trước khi sử dụng các máy, thiết bị, vật  tư, chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động.",
+            "Định kỳ kiểm tra, bảo dưỡng máy, thiết bị, vật tư, chất, nhà xưởng, kho tàng.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Việc bồi dưỡng bằng hiện vật theo nguyên tắc:",
+          options: [
+            "Giúp tăng cường sức đề kháng và thải độc của cơ thể; Bảo đảm thuận tiện, an toàn, vệ sinh thực  phẩm; Thực hiện trong ca, ngày làm việc, trừ trường hợp đặc biệt do tổ chức lao động không thể  tổ chức bồi dưỡng tập trung tại chỗ.",
+            "Thực hiện theo nhu cầu số đông, những cá nhân không nhận bồi dưỡng bằng hiện vật sẽ được cấp  phát bằng tiền.",
+            "Giúp tăng cường sức khỏe trong những ngày tăng ca.",
+            "Tất cả các nguyên tắc nêu trên.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khi xảy ra tai nạn lao động, sự cố kỹ thuật gây mất an toàn, vệ sinh lao động tại nơi làm  việc làm chết người thì người sử dụng lao động có trách nhiệm khai báo ngay với:",
+          options: [
+            "Cơ quan Công an huyện, quận, thị xã, thành phố thuộc tỉnh.",
+            "Cơ quan quản lý nhà nước về lao động cấp tỉnh nơi xảy ra tai nạn.",
+            "Cả a và b.",
+            "Cơ quan quản lý nhà nước về lao động cấp huyện, quận, thị xã, thành phố thuộc tỉnh nơi xảy ra tai  nạn và công an cấp xã.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Trường hợp tai nạn trên đường đi và về từ nơi ở đến nơi làm việc, hồ sơ bắt buộc cơ quan  nhà nước có thẩm quyền có trách nhiệm cung cấp cho đoàn điều tra là:",
+          options: [
+            "Biên bản khám nghiệm hiện trường và sơ đồ hiện trường vụ tai nạn;",
+            "Biên bản điều tra tai nạn giao thông;",
+            "Văn bản xác nhận bị tai nạn của cơ quan Công an xã, phường, thị trấn nơi xảy ra tai nạn theo đề  nghị của người lao động hoặc thân nhân của người lao động.",
+            "Chỉ cần có biên bản a hoặc b; Nếu không có a hoặc b, phải có văn bản theo trường hợp c.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Tiền lương để làm cơ sở thực hiện các chế độ bồi thường, trợ cấp, tiền lương trả cho người  lao động nghỉ việc do bị tai nạn lao động, bệnh nghề nghiệp được quy định là:",
+          options: [
+            "Tiền lương bao gồm mức lương, phụ cấp lương và các khoản bổ sung khác thực hiện theo quy định  của pháp luật về lao động.",
+            "Tiền lương cơ bản.",
+            "Tiền lương cơ sở.",
+            "Tiền lương cơ sở và phụ cấp lương.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Trường hợp người lao động bị tai nạn khi đi từ nơi ở đến nơi làm việc hoặc từ nơi làm việc  về nơi ở theo tuyến đường và thời gian hợp lý, nếu do lỗi của người khác gây ra hoặc không xác  định được người gây ra tai nạn thì:",
+          options: [
+            "Không xét là tai nạn lao động.",
+            "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 12 tháng lương.",
+            "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 40℅ mức tai nạn lao động mà  không hoàn toàn do lỗi của chính người này gây ra.",
+            "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 30 tháng lương.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Mức hưởng trợ cấp, mức hỗ trợ cho người bị tai nạn lao động, bệnh nghề nghiệp được tính  trên cơ sở:",
+          options: [
+            "Mức suy giảm khả năng lao động.",
+            "Mức đóng vào Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp.",
+            "Thời gian đóng Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp.",
+            "Căn cứ vào tất cả các yếu tố nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động bị tai nạn lao động, bệnh nghề nghiệp được giám định hoặc giám định lại  mức suy giảm khả năng lao động khi thuộc một trong các trường hợp nào sau đây:",
+          options: [
+            "Sau khi bị thương tật, bệnh tật lần đầu đã được điều trị ổn định còn di chứng ảnh hưởng tới sức  khỏe",
+            "Sau khi thương tật, bệnh tật tái phát đã được điều trị ổn định;",
+            "Thương tật hoặc bệnh nghề nghiệp không có khả năng điều trị ổn định theo quy định của Bộ  trưởng Bộ Y tế thì người lao động được làm thủ tục giám định trước hoặc ngay trong quy trình  điều trị.",
+            "Tất cả các trường hợp nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động bị tai nạn lao động, bệnh nghề nghiệp là đối tượng trợ cấp hàng tháng với  điều kiện là:",
+          options: [
+            "Người lao động bị suy giảm khả năng lao động từ 21% trở lên.",
+            "Người lao động bị suy giảm khả năng lao động từ 31% trở lên.",
+            "Người lao động bị suy giảm khả năng lao động từ 41% trở lên.",
+            "Người lao động bị suy giảm khả năng lao động từ 51% trở lên.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Mức trợ cấp hàng tháng của Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp được quy  định là:",
+          options: [
+            "Suy giảm 31% khả năng lao động thì được hưởng bằng 30% mức lương cơ sở, sau đó cứ suy giảm  thêm 1% thì được hưởng thêm 2% mức lương cơ sở;",
+            "Tính theo số năm đã đóng vào Quỹ BHTN, BNN: dưới 1 năm tính bằng 0,5 tháng, sau đó cứ thêm  mỗi năm tính thêm 0,3 tháng tiền lương đóng vào quỹ của tháng liền kề trước tháng bị TNLĐ hoặc  được xác định mắc BNN. Trường hợp bị tai nạn lao động ngay trong tháng đầu tham gia đóng vào  quỹ hoặc có thời gian tham gia gián đoạn sau đó trở lại làm việc thì tiền lương làm căn cứ tính  khoản trợ cấp này là tiền lương của chính tháng đó.",
+            "Được hưởng cả hai khoản trợ cấp a và b.",
+            "Tất cả đều sai.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Mức trợ cấp khi người lao động chết do tai nạn lao động, bệnh nghề nghiệp cho thân nhân  người lao động là:",
+          options: [
+            "Trợ cấp một lần bằng ba mươi sáu lần mức lương cơ sở tại tháng người lao động bị chết và được  hưởng chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+            "Trợ cấp một lần bằng ba mươi lần mức lương cơ sở tại tháng người lao động bị chết và được  hưởng chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+            "Trợ cấp một lần bằng ba mươi sáu lần mức lương tại tháng người lao động bị chết và được hưởng  chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+            "Trợ cấp một lần bằng ba mươi lần mức lương tại tháng người lao động bị chết và được hưởng chế  độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Căn cứ của việc lập kế hoạch an toàn, vệ sinh lao động là:",
+          options: [
+            "Đánh giá rủi ro về an toàn, vệ sinh lao động tại nơi làm việc; việc kiểm soát yếu tố nguy hiểm, yếu  tố có hại và kế hoạch ứng cứu khẩn cấp;",
+            "Kết quả thực hiện công tác an toàn, vệ sinh lao động năm trước; Kiến nghị của người lao động, của  tổ chức công đoàn và của đoàn thanh tra, đoàn kiểm tra.",
+            "Nhiệm vụ, phương hướng kế hoạch sản xuất, kinh doanh và tình hình lao động của năm kế hoạch;",
+            "Tất cả các căn cứ nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Các nội dung chủ yếu phải có của Kế hoạch an toàn, vệ sinh lao động là:",
+          options: [
+            "Biện pháp kỹ thuật an toàn lao động và phòng, chống cháy, nổ; Biện pháp về kỹ thuật vệ sinh lao  động, phòng, chống yếu tố có hại và cải thiện điều kiện lao động;",
+            "Trang cấp phương tiện bảo vệ cá nhân cho người lao động; Chăm sóc sức khỏe người lao động;",
+            "Thông tin, tuyên truyền, giáo dục, huấn luyện về an toàn, vệ sinh lao động.",
+            "Bao gồm các nội dung nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Các nội dung chủ yếu phải có của Kế hoạch ứng cứu khẩn cấp phải có là:",
+          options: [
+            "Phương án sơ tán người lao động ra khỏi khu vực nguy hiểm; Biện pháp sơ cứu, cấp cứu người bị  nạn; Biện pháp ngăn chặn, khắc phục hậu quả do sự cố gây ra;",
+            "Trang thiết bị phục vụ ứng cứu;",
+            "Lực lượng ứng cứu tại chỗ; phương án phối hợp với các lực lượng bên ngoài cơ sở; phương án  diễn tập.",
+            "Bao gồm các nội dung nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động tham gia bảo hiểm tai nạn lao động, bệnh nghề nghiệp được hưởng chế độ  tai nạn lao động khi hội đủ các điều kiện với mức suy giảm khả năng lao động là:",
+          options: ["Từ 30℅.", "Trên 30℅.", "Từ 5℅.", "Trên 5℅."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo Bộ luật lao động số 45/2019/QH14 ngày 20 tháng 11 năm 2019, Cứ 05 năm làm việc  cho một người sử dụng lao động thì số ngày nghỉ hằng năm của người lao động tăng thêm:",
+          options: [
+            "Tương ứng 01 ngày.",
+            "Tương ứng 02 ngày.",
+            "Tương ứng 03 ngày.",
+            "Tương ứng 04 ngày.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Thời giờ nghỉ hàng năm tính nguyên lương khi người lao động có đủ 12 tháng làm việc  cho một người sử dụng lao động được quy định là:",
+          options: [
+            "Nghỉ 12 ngày làm việc đối với người làm công việc trong điều kiện bình thường;",
+            "Nghỉ 14 ngày làm việc đối với người làm công việc nặng nhọc, độc hại, nguy hiểm hoặc người làm  việc ở những nơi có có điều kiện sinh sống khắc nghiệt theo danh mục do Bộ Lao động - Thương  binh và Xã hội chủ trì phối hợp với Bộ Y tế ban hành hoặc lao động chưa thành niên hoặc lao động  là người khuyết tật;",
+            "Nghỉ 16 ngày làm việc đối với người làm công việc đặc biệt nặng nhọc, độc hại, nguy hiểm hoặc  người làm việc ở những nơi có điều kiện sinh sống đặc biệt khắc nghiệt theo danh mục do Bộ Lao  động - Thương binh và Xã hội chủ trì phối hợp với Bộ Y tế ban hành.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Thanh toán tiền lương những ngày chưa nghỉ thực hiện trong các trường hợp nào sau đây:",
+          options: [
+            "Người lao động do thôi việc, bị mất việc làm mà chưa nghỉ hết số ngày nghỉ hàng năm.",
+            "Người lao động vì lý do người sử dụng lao động không quy định lịch nghỉ hàng năm mà chưa nghỉ  hằng năm.",
+            "Người lao động do thôi việc, bị mất việc làm mà chưa nghỉ hết số ngày nghỉ hàng năm hoặc vì lý  do người sử dụng lao động không quy định lịch nghỉ hàng năm mà chưa nghỉ hằng năm.",
+            "Khi người sử dụng lao động đã quy định đủ số ngày nghỉ hàng năm nhưng người lao động không  muốn nghỉ.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Lao Động nam đang đóng BHXH khi vợ sinh con được nghỉ việc hưởng chế độ thai sản là:",
+          options: [
+            "05 ngày làm việc nếu sinh thường, 07 ngày làm việc khi vợ sinh con phải phẫu thuật, sinh con dưới  32 tuần tuổi.",
+            "Vợ sinh đôi thì được nghỉ 10 ngày làm việc, từ sinh ba trở lên thì cứ thêm mỗi con được nghỉ thêm  03 ngày làm việc.",
+            "Vợ sinh đôi trở lên mà phải phẫu thuật thì được nghỉ 14 ngày làm việc.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động làm thêm giờ vào ngày nghỉ hàng tuần hoặc ngày lễ được trả lương ít nhất  bằng:",
+          options: [
+            "120 % của tiền lương giờ của ngày làm việc bình thường.",
+            "150% của tiền lương giờ của ngày làm việc bình thường.",
+            "200 % của tiền lương giờ của ngày làm việc bình thường.",
+            "300 % của tiền lương giờ của ngày làm việc bình thường.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Người lao động làm thêm giờ vào ngày thường được trả lương ít nhất bằng:",
+          options: [
+            "120 % của tiền lương giờ của ngày làm việc bình thường",
+            "150 % của tiền lương giờ của ngày làm việc bình thường.",
+            "200% của tiền lương giờ của ngày làm việc bình thường.",
+            "300 % của tiền lương giờ của ngày làm việc bình thường.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Người lao động làm việc ban đêm (từ 22g đến 6g) thì được trả thêm ít nhất bằng.",
+          options: [
+            "30 % của tiền lương làm việc vào ban ngày.",
+            "50 % của tiền lương làm việc vào ban ngày.",
+            "80 % của tiền lương làm việc vào ban ngày.",
+            "100 % của tiền lương làm việc vào ban ngày.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo thông tư số: 25/2013/TT-BLĐTBXH  mức bồi dưỡng bằng hiện vật tính theo định  suất hàng ngày có giá trị bằng tiền tương ứng theo các mức nào sau:",
+          options: [
+            "Mức 1: 10.000 đồng; mức 2: 15.000 đồng; mức 3: 20.000 đồng; mức 4: 25.000 đồng.",
+            "Mức 1: 8.000 đồng; mức 2: 12.000 đồng; mức 3: 16.000 đồng; mức 4: 20.000 đồng.",
+            "Mức 1: 15.000 đồng; mức 2: 20.000 đồng; mức 3: 25.000 đồng; mức 4: 30.000 đồng.",
+            "Mức 1: 12.000 đồng; mức 2: 16.000 đồng; mức 3: 22.000 đồng; mức 4: 26.000 đồng.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "TNLĐ nặng là TNLĐ trong đó nạn nhân có thời gian nghỉ việc:",
+          options: ["03 ngày.", "07 ngày.", "14 ngày.", "14 ngày trở lên."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Mức bồi thường đối với người lao động bị suy giảm khả năng lao động từ 81% trở lên hoặc  bị chết do tai nạn lao động, bệnh nghề nghiệp là:",
+          options: [
+            "Ít nhất bằng 20 tháng tiền lương và phụ cấp lương (nếu có).",
+            "Ít nhất bằng 30 tháng tiền lương và phụ cấp lương (nếu có).",
+            "Ít nhất bằng 36 tháng tiền lương và phụ cấp lương (nếu có).",
+            "Ít nhất bằng 48 tháng tiền lương và phụ cấp lương (nếu có).",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Khi có TNLĐ hoặc bệnh nghề nghiệp :",
+          options: [
+            "Người sử dụng lao động phải chịu toàn bộ chi phí y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong  cho người bị TNLĐ hoặc bệnh nghề nghiệp.",
+            "Người sử dụng lao động chỉ chịu toàn bộ chi phí y tế về TNLĐ, người lao động chịu chi phí về bệnh  nghề nghiệp.",
+            "Người  lao động phải chịu toàn bộ chi phí y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong",
+            "Người sử dụng lao động chịu toàn bộ chi phí về y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong cho  người bị TNLĐ mà không do lỗi của người lao động.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Trường hợp xảy ra TNLĐ chết người hoặc nhiều người bị thương nặng thì người sử dụng  lao động phải:",
+          options: [
+            "Cấp cứu người bị nạn, dọn dẹp hiện trường, báo ngay cho công an.",
+            "Cấp cứu người bị nạn, giữ nguyên hiện trường, báo cáo cho cấp trên.",
+            "Dọn dẹp hiện trường, sửa chữa những chổ bị hư hỏng, báo cáo cho cấp trên.",
+            "Cấp cứu người bị nạn, giữ nguyên hiện trường, báo ngay với Cơ quan Thanh tra Nhà nước về ATLĐ  và cơ quan Công An địa Phương.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Đối tượng nào sau đây phải được cấp phát phương tiện bảo vệ cá nhân:",
+          options: [
+            "Công nhân chuyên ngành điện, công nhân may, bác sĩ chụp X quang.",
+            "Tạp vụ quét dọn rác, lao công quét dọn đường phố, công nhân xây dựng cầu đường.",
+            "Công nhân cơ khí, công nhân xây dựng, cảnh sát cứu hỏa.",
+            "Tất cả các đối tượng trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động có quyền trong vấn đề trang cấp phương tiện bảo vệ cá nhân:",
+          options: [
+            "Kiểm tra để đảm bảo chất lượng trước khi cấp mới và định kỳ kiểm tra thử lại sau thời gian sử dụng  các PTBVCN.",
+            "Từ chối những PTBVCN được cấp mà không đảm bảo chất lượng, không đúng tiêu chuẩn quy định.",
+            "Sử dụng các PTBVCN phù hợp với yêu cầu công việc được giao.",
+            "Tất cả các quyền nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Phương tiện bảo vệ cá nhân phải được:",
+          options: [
+            "Người sử dụng lao động cấp phát miễn phí cho người lao động.",
+            "Bố trí nơi cất giữ bảo quản phương tiện bảo vệ cá nhân theo hướng dẫn của nhà sản xuất, chế tạo  phương tiện bảo vệ cá nhân.",
+            "Trả lại Khi hết thời hạn sử dụng hoặc khi chuyển làm công việc khác nếu người sử dụng lao động  yêu cầu nhưng phải ký bàn giao.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trang bị PTBVCN đầy đủ để ngăn ngừa tai nạn lao động, bệnh nghề nghiệp phải đảm bảo:",
+          options: [
+            "Ngăn ngừa có hiệu quả các tác hại của các yếu tố nguy hiểm, độc hại trong môi trường lao động.",
+            "Được sản xuất tại Việt Nam hoặc nhập khẩu theo đúng tiêu chuẩn chất lượng của Nhà nước quy  định.",
+            "Dễ dàng trong sử dụng, bảo quản,không gây tác hại khác.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Các đồ vật nào dưới đây là phương tiện bảo vệ cá nhân cho công nhân ngành điện:",
+          options: [
+            "Kính bảo vệ mắt, nón bảo hộ, kềm ép dây thủy lực, găng tay cách điện.",
+            "Kính bảo vệ mắt, nón bảo hộ, hộp chống ngã cao, găng tay cách điện.",
+            "Giày bảo hộ, ty leo, biển báo an toàn, các loại khóa vòng, cờ lê mỏ lếch.",
+            "Xe gàu cách điện, sào cách điện, vải bạt cách điện, kích căng dây.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Nón bảo hộ trong ngành điện có khả năng:",
+          options: [
+            "Sử dụng tham gia giao thông bảo vệ đầu.",
+            "Giảm lực xung kích khi va đập và cách điện.",
+            "Giảm  lực xung kích khi va đập.",
+            "Cách điện.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Việc trang bị phương tiện bảo vệ cá nhân cho người lao động có mục đích:",
+          options: [
+            "Hạn chế các yếu tố nguy hiểm và có hại tác động đến thân thể, sức khoẻ của người lao động.",
+            "Bảo vệ người lao động không bị tai nạn lao động và bệnh nghề nghiệp.",
+            "Để đảm bảo an toàn, vệ sinh khi tham gia sản xuất.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Người lao động có nghĩa vụ trong an toàn lao động-vệ sinh lao động là:",
+          options: [
+            "Chấp hành qui định, nội qui về ATLĐ; phải sử dụng và bảo quản các phương tiện bảo vệ cá nhân;  phải báo cáo kịp thời với người có trách nhiệm khi phát hiện nguy cơ gây TNLĐ, bệnh nghề nghiệp.",
+            "Đi làm đúng giờ; sử dụng các trang cụ AT-BHLĐ, sẳn sàng làm thêm giờ khi có yêu cầu, báo cáo  với cấp trên các hư hỏng, khắc phục sự cố khi phát hiện có sự cố.",
+            "Chấp hành mệnh lệnh cấp trên vô điều kiện, bảo quản các dụng cụ đồ nghề, vệ sinh nơi làm việc,  tham gia cấp cứu và khắc phục hậu quản TNLĐ.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: "Người lao động có quyền:",
+          options: [
+            "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc An toàn, vệ sinh; xin tăng lương, không  làm thêm ngoài giờ, lựa chọn công việc mình yêu thích.",
+            "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc an toàn, vệ sinh, cải thiện điều kiện lao  động, cung cấp đầy đủ phương tiện bảo vệ cá nhân, huấn luyện, thực hiện biện pháp an toàn lao  động, VSLĐ; từ chối làm việc khi thấy rõ nguy cơ xảy ra TNLĐ; khiếu nại, tố cáo với cơ quan Nhà  nước khi người sử dụng lao động vi phạm các qui định giao kết về ATLĐ, VSLĐ.",
+            "Yêu cầu người sử dụng lao động huấn luyện các biện pháp ATTLĐ, rời bỏ nơi làm việc khi thấy rõ  nguy cơ xảy ra TNLĐ, phê bình cấp trên khi thấy có các qui định, thông báo không có lợi cho người  lao động.",
+            "Từ chối làm thêm giờ trong bất cứ trường hợp nào.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Người sử dụng lao động có các quyền:",
+          options: [
+            "Cắt giảm lương người lao động, bắt người lao động phải làm thêm giơ, khiếu nại với các cơ quan  Nhà nước về các quyết định của Thanh tra viên lao động.",
+            "Cho người lao động nghĩ việc, bắt người lao động phải chấp hành các qui định nội qui, biện pháp an  toàn lao động, VSLĐ, khen thưởng những người làm tốt, không giải quyết những yêu cầu, phản ảnh  của người lao động.",
+            "Buộc người lao động phải tuân thủ các qui định, nội qui, biện pháp ATLĐ, VSLĐ; khen thưởng  người chấp hành tốt và kỷ luật người vi phạm trong việc thực hiện ATLĐ, VSLĐ; khiếu nại với cơ  quan nhà nước có thẩm quyền về quyết định của Thanh tra viên lao động về ATLĐ, VSLĐ.",
+            "Bắt người lao động phải chấp hành các qui định, nội qui, biện pháp ATLĐ, VSLĐ, bắt người lao  động làm thêm giờ, được quyền bắt nạt, đánh đập người lao động khi họ làm hư sản phẩm, giải thể  các tổ chức Công Đoàn trong đơn vị bênh vực quyền lợi của người lao động.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Phát biểu nào sau đây là đúng:",
+          options: [
+            "Để bồi dưỡng người lao động phục hồi sức khỏe và thải chất độc ra khỏi cơ thể, người sử dụng lao  động có thể chọn một trong hai hình thức là bồi dưỡng bằng tiền hoặc hiện vật.",
+            "Người sử dụng lao động có trách nhiệm trang bị lại cho người lao động phương tiện bảo vệ cá nhân  khi bị mất có lý do chính đáng, hư hỏng hoặc hết hạn sử dụng.",
+            "Nội quy lao động của cơ quan là pháp lý của từng công ty để ràng buộc người lao động.",
+            "Điều kiện lao động là công cụ để người lao động sản xuất ra sản phẩm.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Phát biểu nào sau đây là sai:",
+          options: [
+            "Người sử dụng lao động phải trả đủ tiền lương theo hợp đồng lao động cho người lao động bị tai  nạn lao động, bệnh nghề nghiệp phải nghỉ việc trong thời gian điều trị.",
+            "Người sử dụng lao động có quyền sử dụng người lao động làm thêm giờ mà không cần phải có sự  đồng ý của người lao động.",
+            "Người lao động được trang bị phương tiện bảo vệ cá nhân thì bắt buộc phải sử dụng;",
+            "Trong thời gian mang thai, nghỉ hưởng chế độ khi sinh con, nuôi con dưới 12 tháng tuổi, lao động  nữ không bị xử lý kỷ luật lao động.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Phát biểu nào sau đây là sai:",
+          options: [
+            "Việc huấn luyện an toàn lao động, vệ sinh lao động cho đối tượng nhóm 4 theo nghị định  44/2016/NĐ-CP (điều 21.2) ít nhất mỗi năm một lần.",
+            "Tính chất của công tác bảo hộ lao động là tính pháp luật, tính khoa học kỹ thuật và tính quần chúng.",
+            "Khi xảy ra tai nạn lao động, nếu lỗi xảy ra hoàn toàn do người lao động thì người sử dụng lao động  có quyền đơn phương chấm dứt hợp đồng với người lao động.",
+            "Người sử dụng lao động có quyền Tuyển dụng, bố trí, điều hành lao động theo nhu cầu sản xuất, kinh  doanh; khen thưởng và xử lý vi phạm kỷ luật lao động.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Phát biểu nào sau đây là sai:",
+          options: [
+            "Quy trình làm việc an toàn là quy trình trình bày tất cả các quy định về an toàn lao động, để đảm bảo  an toàn cho trong hoạt động sản xuất kinh doanh.",
+            "Nếu phát hiện trang thiết bị an toàn và bảo hộ lao động có dấu hiệu hư hỏng,  phải báo cáo với người  quản lý biết nhưng vẫn phải tiếp tục làm công việc theo mệnh lệnh.",
+            "Dụng cụ và thiết bị cho công việc sửa chữa có điện phải được kiểm tra định kỳ theo tiêu chuẩn và  bảo dưỡng, bảo quản theo quy định.",
+            "Các dụng cụ và trang thiết bị an toàn điện phải đạt được các tiêu chuẩn thử nghiệm và sử dụng.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Trong các yếu tố sau đây, yếu tố nào là yếu tố nguy hiểm trong lao động?",
+          options: [
+            "Làm việc trên cao; nguồn điện; bụi; vật văng, bắn.",
+            "Làm việc trên cao; nguồn điện; vật rơi, đổ, sập; vật văng, bắn.",
+            "Làm việc trên cao; nguồn điện; vật rơi, đổ, sập; hóa chất độc.",
+            "Làm việc trên cao; nguồn điện; vi khí hậu; vật văng, bắn.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Các yếu tố nguy hiểm gây chấn thương trong lao động là:",
+          options: [
+            "Những yếu tố gây tai nạn lao động hoặc bệnh cho người lao động.",
+            "Là những yếu tố điều kiện lao động xấu, có nguy cơ gây ra tai nạn lao động.",
+            "Là những yếu tố điều kiện lao động xấu đã xảy gây ra tai nạn lao động.",
+            "Là những có khả năng rơi, đổ sập hoặc văng bắn vào người lao động.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Các yếu tố nào sau đây là yếu tố nguy hiểm:",
+          options: [
+            "Dây dẫn đang căng ở vị trí góc- Điện cao áp- Hồ quang điện- Gãy, đổ trụ",
+            "Môi trường làm việc: tần số cao- điện từ trường vượt qua giới hạn cho phép.",
+            "Làm việc trong môi trường ẩm ướt, chật hẹp, thiếu dưỡng khí.",
+            "Môi trường làm việc có các vi sinh vật gây bệnh.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khi làm việc trên cao, yếu tố nguy hiểm có thể xuất hiện khi đứng trên trụ là:",
+          options: [
+            "Động vật nguy hiểm, ngã cao, gãy đổ trụ",
+            "Sét, điện giật, phóng điện.",
+            "Dây dẫn trụ góc văng bắn vào người, điện từ trường, say nắng.",
+            "Tất cả các trường hợp nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong các yếu tố sau đây, yếu tố nào ảnh hưởng đến vi khí hậu?",
+          options: [
+            "Nhiệt độ, độ ẩm, tốc độ gió, bức xạ nhiệt.",
+            "Chất phóng xạ, hơi khí độc, tiếng ồn, rung.",
+            "Nhiệt độ, tiếng ồn, bụi, độ ẩm, tốc độ gió.",
+            "Bụi, tiếng ồn, ánh sáng, nhiệt độ, độ ẩm, bức xạ nhiệt.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khi máy đang hoạt động bất ngờ bị cúp điện thì công nhân vận hành phải xử lý như thế  nào?",
+          options: [
+            "Tắt máy, ngắt cầu dao chính của máy.",
+            "Tắt máy, lau chùi vô dầu mỡ.",
+            "Báo cáo với người phụ trách cho nghỉ đột xuất.",
+            "Khống chế các bộ phận quay.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: "Bụi có tác hại gì ?",
+          options: [
+            "Gây cháy hoặc nổ ở nơi có điều kiện thích hợp, làm giảm khả năng cách điện của bộ phận cách  điện, gây chập mạch…;",
+            "Gây tổn thương cơ quan hô hấp: xây xát, viêm kinh niên, tùy theo loại bụi có thể dẫn đến viêm  phổi, ung thư phổi;",
+            "Tổn thương mắt hoặc bịt lỗ chân lông, lở loét, ghẻ, bênh bụi phổi;",
+            "Các khả năng trên đều có thể xảy ra.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Mối nguy hiểm của bụi nếu không có biện pháp loại trừ trong quá trình sản xuất là:",
+          options: [
+            "Gây cháy nổ.",
+            "Gây bệnh bụi phổi cho khi phải tiếp xúc trong môi trường bụi thường xuyên.",
+            "Gây bệnh ngoài da: bịt lỗ chân lông, lở loét, ghẻ.",
+            "Các yếu tố trên đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong các hiện tượng nổ sau đây, hiện tượng nào là hiện tượng nổ vật lý:",
+          options: [
+            "Áp suất bình bơm hơi tăng vượt quá giới hạn gây nổ.",
+            "Axêtylen chiếm tỉ lệ từ 3,5 - 82% trong không khí.",
+            "Amôniắc chiếm tỷ lệ từ 12 - 15% thể tích trong không khí.",
+            "Khí hydro làm mát máy bị rò rỉ gây nổ.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khi thấy rõ nguy cơ xảy ra tai nạn lao động, đe dọa nghiêm trọng tính mạng, sức khỏe của  mình, người lao động có quyền và nghĩa vụ:",
+          options: [
+            "Từ chối làm công việc hoặc rời bỏ nơi làm việc.",
+            "Phải báo ngay với người phụ trách trực tiếp.",
+            "Từ chối trở lại nơi làm việc nếu nguy cơ đó chưa được khắc phục.",
+            "Gồm cả 3 câu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khi thấy có người bị tai nạn điện do điện cao áp phóng, là công nhân ngành điện, bạn cần  phải có những biện pháp ứng cứu khẩn cấp là:",
+          options: [
+            "Nhanh chóng đánh giá tình hình và xác định các rủi ro có thể xảy ra để tự bảo vệ mình và bảo vệ  người bị nạn.",
+            "Nhanh chóng tách người bị nạn ra khỏi mạch điện với những điều kiện có sẵn mà bạn có thể thực  hiện được. Kiểm tra, đánh giá tình trạng sống của nạn nhân về não, tim và hô hấp sau khi đã tách  người ra khỏi mạng điện.",
+            "Thực hiện các bước hồi sinh tổng hợp theo quy định.",
+            "Thực hiện theo đúng các trình tự a-b-c.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Xác định tình trạng sống của nạn nhân bị tai nạn lao động là trong điều kiện khẩn cấp là:",
+          options: [
+            "Còn thở hay đã tắt thở.",
+            "Hiện trạng nguyên vẹn của não bộ, tim và quá trình bị tai nạn có bị va đập hay không, nhịp đập của  tim và hơi thở.",
+            "Nạn nhân có phản ứng với các kích thích giác quan hay không.",
+            "Tim còn đập hay ngưng đập, não bộ còn nguyên vẹn hay không.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Đánh giá và quản lý các yếu tố nguy hiểm có hại là:",
+          options: [
+            "Quá trình liên tục thông qua kiểm tra thực tế và rút kinh nghiệm của những vụ tai nạn, sự cố xảy ra.",
+            "Đánh giá sự tác động của các mối nguy hiểm tới con người.",
+            "Quá trình phải tiến hành thường xuyên và đóng vai trò quan trọng đối với doanh nghiệp.",
+            "Quá trình liên tục thông qua kiểm tra thực tế và rút kinh nghiệm qua những vụ tai nạn, sự cố xảy ra,  phải tiến hành thường xuyên và đóng vai trò quan trọng đối với doanh nghiệp.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Đánh giá rủi ro gồm có các công việc sau:  A. Xác định hậu quả của rủi ro  B. Kiểm soát rủi ro.  C. Xác định rủi ro có khả năng xảy ra.  D. Nhận diện yếu tố nguy hiểm  E. Xếp loại rủi ro  Vậy trình tự đánh giá rủi ro là sẽ là:",
+          options: ["DCABE.", "ABCDE.", "DCBAE.", "DABCE."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Các công việc nào sau đây là các công việc thể hiện khoa học kỹ thuật ứng dụng vào trong  lao động:",
+          options: [
+            "Đào rãnh lắp đặt cáp ngầm bằng robot",
+            "Trồng trụ điện bằng xe cẩu chuyên dùng",
+            "Vận hành trạm biến áp 110 kV không người trực.",
+            "Tất cả các công việc nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Công dụng của biển báo là trong an toàn vệ sinh lao động là:",
+          options: [
+            "Cảnh báo mối nguy hiểm.",
+            "Cảnh báo mối nguy hiểm, hướng dẫn hoặc cho phép thực hiện công việc nào đó.",
+            "Cảnh báo mối nguy hiểm, hướng dẫn hoặc cho phép thực hiện công việc nào đó, yêu cầu phải thực  hiện để đảm bảo an toàn.",
+            "Cảnh báo mối nguy hiểm, yêu cầu phải thực hiện để đảm bảo an toàn.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Mục đích của biển báo, tín hiệu, báo hiệu:",
+          options: [
+            "Nhắc nhở cho NLĐ kịp thời tránh nguy hiểm, hướng dẫn vận hành thiết bị, nhận biết quy định về  kỹ thuật và kỹ thuật an toàn qua dấu hiệu quy ước về màu sắc, hình vẽ.",
+            "Nhắc nhở cho người lao động kịp thời tránh nguy hiểm, hướng dẫn thao tác, nhận biết quy định về  kỹ thuật và kỹ thuật an toàn qua dấu hiệu quy ước về màu sắc, hình vẽ.",
+            "Nhắc nhở cho người lao động kịp thời tránh nguy hiểm, hướng dẫn thao tác, hướng dẫn quy trình.",
+            "Cảnh báo, hướng dẫn thao tác, hướng dẫn quy trình.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Quy tắc an toàn khi làm việc tập thể:",
+          options: [
+            "Khi làm việc tập thể phải phối hợp chặt chẽ với nhau, chỉ định người chỉ huy và làm việc theo tín  hiệu của người chỉ huy, khi đổi ca phải bàn giao công việc một cách tỷ mỉ, rõ ràng, trước khi vận  hành thiết bị phải chú ý quan sát người xung quanh.",
+            "Phân công công việc một cách chi tiết cho từng cá nhân và buộc mỗi cá nhân phải làm đúng nhiệm  vụ của mình.",
+            "Quan sát kỹ mọi người, mọi việc xung quanh để có thể hỗ trợ khi cần thiết.",
+            "Ngoài nhiệm vụ được phân công cần hỗ trợ cho tập thể để hoàn thành công việc chung.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: "An toàn trong khi cần cẩu làm việc là:",
+          options: [
+            "Mọi người không có phận sự phải đứng ngoài chu vi vạch ra bởi tầm với của cần trục một khoảng  cách tối thiểu là 3 mét.",
+            "Cấm việc vừa nâng tải trọng vừa quay cần.",
+            "Người điều khiển cần cẩu và người được giao làm tín hiệu phải luôn luôn có mặt tại nơi làm việc.",
+            "Phải thực hiện tất cả các quy định kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Tai nạn điện trong khi vận hành và sử dụng thiết bị nâng có thể xảy ra trong các trường hợp  sau:",
+          options: [
+            "Khi điện bị chạm mát ra các bộ phận không mang điện.",
+            "Khi va chạm vào các bộ phận mang điện và các đường dây tải điện.",
+            "Khi đổ lật thiết bị nâng vào đường dây đang mang điện.",
+            "Tất cả những trường hợp nêu trên đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Trong các câu sau, câu nào đúng:",
+          options: [
+            "Người lái xe cần cẩu phải trong độ tuổi lao động do nhà nước qui định, Đã được đào tạo nghề nghiệp  và được cấp bằng lái xe cần cẩu tương ứng. Được huấn luyện BHLĐ và có thẻ an toàn kèm theo.",
+            "Người lái xe cần cẩu phải qua khám tuyển sức khỏe bởi cơ quan y tế, nắm vững và thực hiện nghiêm  túc luật lệ giao thông.",
+            "Người lái xe cần cẩu phải trong độ tuổi lao động do nhà nước qui định, đã được đào tạo nghề nghiệp  và được cấp bằng lái xe cần cẩu tương ứng. Được huấn luyện BHLĐ và có thẻ an toàn kèm theo. Sử  dụng đủ và đúng các phương tiện bảo vệ cá nhân được cấp phát theo chế độ. Qua khám tuyển sức  khỏe bởi cơ quan y tế.",
+            "Người lái xe cần cẩu phải trong độ tuổi lao động do nhà nước qui định, đã được đào tạo nghề nghiệp  và được cấp bằng lái xe cần cẩu tương ứng. Được huấn luyện BHLĐ và có thẻ an toàn kèm theo. Sử  dụng đủ và đúng các phương tiện bảo vệ cá nhân được cấp phát theo chế độ.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Dùng ô tô để vận chuyển thiết bị nguyên vật liệu cồng kềnh:",
+          options: [
+            "Phải bố trí người ngồi giử cho chắc chắn.",
+            "Phải sắp xếp cho gọn gàng, chèn buộc chắc chắn và không được bố trí người ngồi trên để giữ.",
+            "Phải sắp xếp cho gọn gàng, chèn buộc chắc chắn nhưng vẫn bố trí người ngồi trên để giử.",
+            "Chọn 1 trong 3 cách nói trên tùy trường hợp.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Nội dung kiểm soát các yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc theo nghị định  39/2016/NĐ-CP là:",
+          options: [
+            "Nhận diện và đánh giá các yếu tố nguy hiểm, yếu tố có hại.",
+            "Xác định Mục tiêu và các biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại.",
+            "Triển khai và đánh giá hiệu quả các biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại.",
+            "Bao gồm tất cả các nội dung nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Nhận diện và đánh giá các yếu tố nguy hiểm, yếu tố có hại theo nghị định 39/2016/NĐ CP là công việc:",
+          options: [
+            "Phân tích đặc điểm điều kiện lao động, quy trình làm việc có liên quan và kết quả kiểm tra nơi làm  việc.",
+            "Khảo sát người lao động về những yếu tố có thể gây tổn thương, bệnh tật, làm suy giảm sức khỏe  của họ tại nơi làm việc. Trường hợp không nhận diện, đánh giá được đầy đủ, chính xác bằng cảm  quan thì phải sử dụng máy, thiết bị phù hợp để đo, kiểm các yếu tố nguy hiểm, yếu tố có hại; lập hồ  sơ vệ sinh môi trường lao động đối với các yếu tố có hại, phòng chống bệnh nghề nghiệp.",
+            "Cả 2 công việc nêu trên.",
+            "Quản lý và loại trừ rủi ro trong lao động.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Nội dung đánh giá hiệu quả biện pháp phòng, chống yếu tố nguy hiểm, yếu tố có hại tại nơi  làm việc là đánh giá:",
+          options: [
+            "Việc tổ chức triển khai các biện pháp phòng, chống yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc;",
+            "Kết quả cải thiện Điều kiện lao động.",
+            "Bao gồm cả 2 nội dung đánh giá kể trên.",
+            "Số lượng và tần suất tai nạn lao động, bệnh nghề nghiệp đã xảy ra trong năm.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Nội dung của phương án xử lý sự cố kỹ thuật gây mất an toàn, vệ sinh lao động nghiêm  trọng quy định tại Khoản 1 Điều 19 Luật An toàn, vệ sinh lao động theo nghị định 39/2016/NĐ-CP  là:",
+          options: [
+            "Lực lượng tham gia xử lý sự cố tại chỗ và nhiệm vụ của từng thành viên tham gia; lực lượng hỗ trợ  từ các cơ sở sản xuất, kinh doanh lân cận;",
+            "Phương tiện kỹ thuật phải có theo quy định của pháp luật chuyên ngành; thiết bị đo lường cần thiết  dùng trong quá trình xử lý sự cố (các thiết bị này phải được kiểm định, hiệu chuẩn theo quy định  hiện hành của pháp luật về đo lường);",
+            "Cách thức, trình tự xử lý sự cố.",
+            "Bao gồm tất cả nội dung nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Tai nạn lao động phân loại theo mức độ thiệt hại về con người theo nghị định 39/2016/NĐ CP là:",
+          options: [
+            "Tai nạn lao động nặng và tai nạn lao động nhẹ.",
+            "Tai nạn lao động chết người, Tai nạn lao động nặng và tai nạn lao động nhẹ.",
+            "Tai nạn lao động chết người, Tai nạn lao động nặng.",
+            "Tai nạn lao động chết người, Tai nạn lao động không chết người.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp  là khoảng cách tối thiểu từ dây dẫn điện  đến điểm gần nhất của thiết bị, dụng cụ, phương tiện làm việc trong hành lang bảo vệ an toàn lưới  điện cao áp và được quy định tại nghị định 14/2014/NĐ-CP đến cấp điện áp 22 kV là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp  là khoảng cách tối thiểu từ dây dẫn điện  đến điểm gần nhất của thiết bị, dụng cụ, phương tiện làm việc trong hành lang bảo vệ an toàn lưới  điện cao áp và được quy định tại nghị định 14/2014/NĐ-CP đến cấp điện áp 110 kV là:",
+          options: ["4,0 m.", "5,0 m.", "6,0 m.", "7,0 m"],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp  ở những đoạn giao chéo giữa đường dây  dẫn điện trên không với phương tiện đường bộ là khoảng cách tối thiểu từ dây dẫn điện khi dây ở  trạng thái võng cực đại đến điểm cao nhất của đối tượng được bảo vệ (4,5m) và được quy định tại  nghị định 14/2014/NĐ-CP đến cấp điện áp 35 kV là:",
+          options: ["1 mét.", "1,5 mét.", "2 mét.", "2,5 mét."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp ở những đoạn giao chéo giữa đường dây  dẫn điện trên không với phương tiện giao thông đường bộ là khoảng cách tối thiểu từ dây dẫn điện  khi dây ở trạng thái võng cực đại đến điểm cao nhất của đối tượng được bảo vệ (4,5m) và được quy  định tại nghị định 14/2014/NĐ-CP đến cấp điện áp 110 kV là:",
+          options: ["2 mét.", "2,5 mét.", "3 mét.", "3,5 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp  ở những đoạn giao chéo giữa đường dây  dẫn điện trên không với phương tiện, công trình giao thông đường sắt là khoảng cách tối thiểu từ dây  dẫn điện khi dây ở trạng thái võng cực đại đến điểm cao nhất của đối tượng được bảo vệ (4,5m) và  được quy địnhtại nghị định 14/2014/NĐ-CP đến cấp điện áp 35 kV là:",
+          options: ["3 mét.", "4 mét.", "5 mét.", "6 mét."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khoảng cách an toàn phóng điện theo cấp điện áp  ở những đoạn giao chéo giữa đường dây  dẫn điện trên không với phương tiện, công trình giao thông đường sắt là khoảng cách tối thiểu từ dây  dẫn điện khi dây ở trạng thái võng cực đại đến điểm cao nhất của đối tượng được bảo vệ (4,5m) và  được quy định tại nghị định 14/2014/NĐ-CP đến cấp điện áp 110 kV là:",
+          options: ["3 mét.", "4 mét.", "5 mét.", "6 mét."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Chiều rộng hành lang bảo vệ an toàn của đường dây dẫn điện trên không(Dây bọc) được giới  hạn bởi hai mặt thẳng đứng về hai phía của đường dây, song song với đường dây, có khoảng cách từ  dây ngoài cùng về mỗi phía khi dây ở trạng thái tĩnh theo quy định đến 22 kV  là:",
+          options: ["1 mét", "2 mét", "3 mét", "4 mét"],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Chiều rộng hành lang bảo vệ an toàn của đường dây dẫn điện trên không(Dây trần) được giới  hạn bởi hai mặt thẳng đứng về hai phía của đường dây, song song với đường dây, có khoảng cách từ  dây ngoài cùng về mỗi phía khi dây ở trạng thái tĩnh theo quy định đến 22 kV  là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Chiều rộng hành lang bảo vệ an toàn của đường dây dẫn điện trên không (Dây trần) được giới  hạn bởi hai mặt thẳng đứng về hai phía của đường dây, song song với đường dây, có khoảng cách từ  dây ngoài cùng về mỗi phía khi dây ở trạng thái tĩnh theo quy định cấp 110 kV  là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Chiều cao hành lang hành lang bảo vệ an toàn của đường dây dẫn điện trên không được tính  từ đáy móng cột đến điểm cao nhất của công trình cộng thêm khoảng cách an toàn theo chiều thẳng  đứng quy định đến 35 kV  là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Chiều cao hành lang hành lang bảo vệ an toàn của đường dây dẫn điện trên không được tính  từ đáy móng cột đến điểm cao nhất của công trình cộng thêm khoảng cách an toàn theo chiều thẳng  đứng quy định đến 110 kV  là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Đối với đường dây dẫn điện có điện áp đến 35 kV trong thành phố, thị xã, thị trấn thì khoảng  cách từ điểm bất kỳ của cây đến dây dẫn điện (dây bọc) ở trạng thái võng cực đại không nhỏ hơn  khoảng cách quy định đến cấp điện áp 35 kV là:",
+          options: ["0,5 mét.", "0,6 mét.", "0,7 mét.", "0,8 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Đối với đường dây dẫn điện có điện áp đến 35 kV trong thành phố, thị xã, thị trấn thì khoảng  cách từ điểm bất kỳ của cây đến dây dẫn điện (dây trần) ở trạng thái võng cực đại không nhỏ hơn  khoảng cách quy định đến cấp điện áp 35 kV là:",
+          options: ["0,5 mét.", "1,0 mét.", "1,5 mét.", "2,0 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Đối với đường dây ngoài thành phố, thị xã, thị trấn thì khoảng cách từ điểm cao nhất của cây  theo chiều thẳng đứng đến độ cao của dây dẫn(dây bọc) thấp nhất khi đang ở trạng thái võng cực đại  không nhỏ hơn khoảng cách đến cấp điện áp 35 kV là:",
+          options: ["0,5 mét.", "0,6 mét.", "0,7 mét.", "0,8 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Đối với đường dây ngoài thành phố, thị xã, thị trấn thì khoảng cách từ điểm cao nhất của cây  theo chiều thẳng đứng đến độ cao của dây dẫn (dây trần) thấp nhất khi đang ở trạng thái võng cực  đại không nhỏ hơn khoảng cách đến cấp điện áp 35 kV là:",
+          options: ["0,5 mét.", "1,0 mét.", "1,5 mét.", "2,0 mét."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Đối với đường dây ngoài thành phố, thị xã, thị trấn thì khoảng cách từ điểm cao nhất của cây  theo chiều thẳng đứng đến độ cao của dây dẫn thấp nhất khi đang ở trạng thái võng cực đại không  nhỏ hơn khoảng cách cấp điện áp 110 kV là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Đối với các trạm điện không có tường, rào bao quanh, hành lang bảo vệ được giới hạn bởi  không gian bao quanh trạm điện có khoảng cách đến các bộ phận mang điện gần nhất của trạm điện  theo quy định đến 22 kV  là:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Các hoạt động nào sau đây là hành động nguy hiểm để đánh giá rủi ro trên tuyến đường dây:",
+          options: [
+            "Thả diều, vật bay gần công trình lưới điện cao áp có khả năng gây sự cố lưới điện.",
+            "Bắn chim đậu trên dây điện, trạm điện hoặc quăng, ném bất kỳ vật gì lên đường dây điện, trạm điện.",
+            "Lắp đặt ăng ten thu phát sóng; dây phơi; giàn giáo; biển, hộp đèn quảng cáo và các vật dụng khác  tại các vị trí mà khi bị đổ, rơi có thể va chạm vào công trình lưới điện cao áp.",
+            "Tất cả các hoạt động nêu trên là hành động nguy hiểm.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Cường độ điện trường tại khu vực có người thường xuyên làm việc là yếu tố:",
+          options: [
+            "Nguy hiểm,",
+            "Có hại.",
+            "Nguy hại.",
+            "Gây tai nạn lao động.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Biện pháp khi làm việc tại vị trí nguy hiểm do thiếu oxy bao gồm: đặt hàng rào bảo vệ phải  được thực hiện để ngăn ngừa người không có phận sự đi vào nơi làm việc. Biển báo nguy hiểm phải  được đặt tại nơi dễ quan sát. Bố trí dụng cụ cứu hộ là biện pháp:",
+          options: [
+            "Kỹ thuật.",
+            "Tổ chức.",
+            "Tổ chức và kỹ thuật.",
+            "Hành chính.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Đo nồng độ Oxy và khí độc hại  khi làm việc tại vị trí nguy hiểm để đảm bảo rằng nồng độ  phải nằm trong giới hạn cho phép được qui định: Oxy(Lớn hơn hoặc bằng 18%); Cacbon  monoxyt(Nhỏ hơn hoặc bằng 0,005%); Khí dễ cháy(Nhỏ hơn 30% giới hạn dưới gây nổ); Nhỏ hơn  hoặc bằng 0,01% nhằm mục đích:",
+          options: [
+            "Loại trừ các yếu tố nguy hiểm.",
+            "Loại trừ các yếu tố có hại.",
+            "Loại trừ các yếu tố nguy hiểm và có hại.",
+            "Phòng tránh gây ngộp thở cho người lao động.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            'Biện pháp khi làm việc tại vị trí nguy hiểm do thiếu oxy khi thông gió quy định: "Không được  sử dụng khí Oxy nguyên chất để thông gió" nhằm mục đích:',
+          options: [
+            "Loại trừ các yếu tố nguy hiểm do cháy nổ khí Oxy.",
+            "Loại trừ các yếu tố có hại do cháy nổ khí Oxy.",
+            "Tiết kiệm khí Oxy cho người lao động trong quá trình làm việc.",
+            "Tất cả đều đúng",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Quy định “Cấm vận hành xe cần cẩu, xe thang và xe nâng... trong trường hợp có gió mạnh từ  cấp 5 trở lên” nhằm mục đích:",
+          options: [
+            "Loại trừ các yếu tố nguy hiểm.",
+            "Loại trừ các yếu tố có hại như lật cẩu, gãy cần,vật rơi…",
+            "Thực hiện các biện pháp thích hợp cho việc loại trừ các yếu tố có hại lúc có gió cấp 5.",
+            "Loại trừ các yếu tố nguy hiểm như lật cẩu, gãy cần…. Để đề phòng tai nạn lao động.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96 với cấp điện áp từ 01  đến 100 kV đối với điện áp xung (trị số biên độ) là:",
+          options: ["0,5 mét.", "0,6 mét.", "0,7 mét.", "0,8 mét."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96 với cấp điện áp trên 150  đến 400 kV đối với điện áp xung (trị số biên độ) là:",
+          options: ["0,6 mét.", "0,65 mét.", "0,7 mét.", "0,75 mét."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96 với cấp điện áp trên 100  đến 150 kV đối với điện áp xung (trị số biên độ) là:",
+          options: ["0,5 mét.", "1,0 mét.", "1,5 mét.", "2,0 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96  với cấp điện áp trên 20  đến 50 kV đối với điện áp tần số công nghiệp, điện áp hiệu dụng và điện một chiều là:",
+          options: ["0,5 mét.", "0,6 mét.", "0,7 mét.", "0,8 mét."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96  với cấp điện áp trên 50  đến 100 kV đối với điện áp tần số công nghiệp, điện áp hiệu dụng và điện một chiều là:",
+          options: ["0,5 mét.", "1,0 mét.", "1,5 mét.", "2,0 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào chắn cố định có nối đất không  được nhỏ hơn khoảng cách được quy định ở QCVN 01: 2020/BCT, điều 96  với cấp điện áp trên 100  đến 250 kV đối với điện áp tần số công nghiệp, điện áp hiệu dụng và điện một chiều là:",
+          options: ["0,5 mét", "1,0 mét.", "1,5 mét.", "2,0 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, khoảng cách từ phần dẫn điện của thiết bị thử nghiệm đến rào  chắn tạm thời có nối đất phải bằng:",
+          options: [
+            "1/2 rào chắn cố định.",
+            "Ít nhất bằng rào chắn cố định.",
+            "Ít nhất bằng 2 lần rào chắn cố định.",
+            "Ít nhất bằng 3 lần rào chắn cố định.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT,Kết cấu của rào chắn phải đảm bảo người không thể vô ý chạm  phải phần có điện. Rào chắn cố định phải có chiều cao không nhỏ hơn:",
+          options: ["1,5 mét.", "1,6 mét.", "1,7 mét.", "1,8 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, Kết cấu của rào chắn phải đảm bảo người không thể vô ý chạm  phải phần có điện. Rào chắn tạm thời phải có chiều cao không nhỏ hơn:",
+          options: ["1,2 mét.", "1,5mét.", "1,7 mét.", "2,0 mét"],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, Chỉ cho phép đi vào phía trong rào chắn để kiểm tra máy biến  áp nếu vỏ máy biến áp đó được nối đất và khoảng cách từ tán sứ dưới cùng của các sứ máy biến áp  có cấp điện áp trên 10 đến 35 kV không nhỏ hơn:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, Chỉ cho phép đi vào phía trong rào chắn để kiểm tra máy biến  áp nếu vỏ máy biến áp đó được nối đất và khoảng cách từ tán sứ dưới cùng của các sứ máy biến áp  có cấp điện áp trên 35 đến 110 kV không nhỏ hơn:",
+          options: ["1,5 mét.", "2 mét.", "2,5 mét.", "3 mét."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, Đơn vị quản lý vận hành trạm thử nghiệm, phòng thí nghiệm  phải thực hiện kiểm định định kỳ các trang thiết bị, dụng cụ thí nghiệm. Các trang thiết bị không đạt  yêu cầu sau kiểm định thì:",
+          options: [
+            "Không được sử dụng.",
+            "Vẫn tạm thời được sử dụng sau khi có sự đồng ý của lãnh đạo.",
+            "Sửa chữa lại sau đó tiêp tục sử dụng.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo QCVN 01: 2020/BCT, Làm việc trên cao là làm việc ở độ cao từ:",
+          options: [
+            "1 mét trở lên.",
+            "2 mét trở lên.",
+            "3 mét trở lên.",
+            "4 mét trở lên.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Phương tiện bảo vệ cá nhân là những dụng cụ, phương tiện cần thiết mà người lao động phải  được trang bị để sử dụng trong khi làm việc hoặc thực hiện nhiệm vụ để:",
+          options: [
+            "Bảo vệ cơ thể khỏi tác động của các yếu tố nguy hiểm phát sinh trong quá trình lao động.",
+            "Bảo vệ cơ thể khỏi tác động của các yếu tố độc hại phát sinh trong quá trình lao động.",
+            "Bảo vệ cơ thể khỏi tác động của các yếu tố nguy hiểm, độc hại phát sinh trong quá trình lao động",
+            "Bảo vệ cơ thể khỏi tác động của các yếu tố nguy hiểm, độc hại phát sinh trong quá trình lao động,  khi các giải pháp công nghệ, thiết bị, kỹ thuật an toàn, vệ sinh lao động tại nơi làm việc chưa thể  loại trừ hết.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Xe chuyên dùng là loại xe:",
+          options: [
+            "Được trang bị phương tiện để sử dụng cho mục đích riêng biệt.",
+            "Được sử dụng cho mục đích riêng.",
+            "Được sử dụng cho mục đích riêng như xe chở vật tư, xe đưa rước công nhân",
+            "Tất cả đều đúng",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: "Theo QCVN 01: 2020/BCT, Cắt điện là:",
+          options: [
+            "Cắt dao cách ly của đường dây.",
+            "Cắt máy cắt của đường dây.",
+            "Cách ly phần đang mang điện khỏi nguồn điện.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Trong trường hợp vi phạm biện pháp an toàn phải:",
+          options: [
+            "Tiếp tục tiến hành công việc và báo cáo với người trực tiếp quản lý biết.",
+            "Dừng ngay công việc, chỉ được tiếp tục tiến hành công việc sau khi đã làm đủ, đúng các quy định  về an toàn.",
+            "Rời bỏ hiện trường làm việc.",
+            "Tất cả đều đúng.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Những biện pháp chuẩn bị nơi làm việc phải cắt điện bao gồm:  Cắt điện và ngăn chặn có  điện trở lại nơi làm việc, Kiểm tra không còn điện, Đặt nối đất,  Đặt rào chắn; treo biển báo, tín hiệu  là biện pháp:",
+          options: [
+            "An toàn chung.",
+            "Kỹ thuật.",
+            "Tổ chức.",
+            "Tổ chức Kỹ thuật.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Tai nạn có thể xảy ra khi người công nhân trèo lên trụ điện với khoảng cách với phần mang  điện là 0,7 mét ở cấp điện áp 22kV là:",
+          options: [
+            "Phóng điện.",
+            "Ngã cao.",
+            "Ngất xỉu do say nắng.",
+            "Tất cả các nguy cơ trên đều có thể xày ra.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Để phòng tránh hiện tượng phóng điện cao áp, khoảng cách gần nhất của người đến phần  mang điện ở cấp điện áp 22kV không nhỏ hơn:",
+          options: ["1 mét.", "2 mét.", "3 mét.", "4 mét."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Những phần có điện mà khi làm việc không thể tránh được va chạm hoặc vi phạm khoảng  cách đến phần mang điện khi phải làm rào chắn thì ở cấp điện áp 22kV không nhỏ hơn:",
+          options: ["0,5 mét", "0,6 mét", "0,7 mét", "0,8 mét"],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Trường hợp khi di chuyển, nếu thiết bị thử điện bị rơi hoặc bị vỡ thì:",
+          options: [
+            "Tiếp tục sử dụng thử điện.",
+            "Không tiếp tục sử dụng thử điện, chỉ được sử dụng khi đã sửa chữa và kiểm định lại.",
+            "Tiếp tục sử dụng thử điện nhưng phải báo ngay cho người quản lý trực tiếp biết.",
+            "Căn cứ tín hiệu đèn, rơ le, đồng hồ để xác nhận thiết bị không còn điện.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Các nối đất tạo vùng an toàn khi làm việc chỉ được tháo dỡ khi có sự đồng ý của:",
+          options: [
+            "Người chỉ huy trực tiếp.",
+            "Người cho phép.",
+            "Người giám sát an toàn.",
+            "Tất cả các đối tượng nêu trên đều có thể cho phép tháo nối đất tạo vùng an toàn.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Không được sử dụng loại rào chắn nào sau trong ngành điện:",
+          options: [
+            "Rào chắn sử dụng vật liệu dẫn điện.",
+            "Rào chắn làm bằng vật ẩm ướt.",
+            "Rào chắn thiết lập không chắc chắn.",
+            "Tất cả các yêu cầu nêu trên đều không sử dụng được.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Yêu cầu của rào chắn tạm thời là:",
+          options: [
+            "Phải đảm bảo đúng chiều cao theo quy định.",
+            "Không được chặn lối thoát hiểm cho người làm việc khi có nguy hiểm xảy ra.",
+            "Đảm bảo khoảng cách an toàn theo cấp điện áp.",
+            "Tất cả các loại nêu trên đều phải đảm bảo.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Biện pháp an toàn cho người công nhân ngành điện tự bảo vệ bản thân mình trong lao động  là:",
+          options: [
+            "Những mệnh lệnh không đúng Quy trình an toàn điện và các quy trình có liên quan khác, có nguy  cơ mất an toàn cho người hoặc thiết bị thì người nhận lệnh có quyền không chấp hành nhưng phải  báo cáo rõ lý do.",
+            "Không trở lại làm việc khi các biện pháp an toàn chưa thực hiện đúng và đủ.",
+            "Báo cáo với cấp trên trực tiếp của người ra lệnh và/hoặc cấp có thẩm quyềnkhi bị buộc làm công  việc có nguy cơ ảnh hưởng đến tính mạng hoặc sức khỏe của mình.",
+            "Tất cả các biện pháp nêu trên đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Ở bộ phận truyền động của máy cắt, dao cách ly mà từ đó đóng điện đến nơi làm việc, treo  biển:",
+          options: [
+            "“Cấm đóng điện! Có người đang làm việc”.",
+            "“Dừng lại! Có điện nguy hiểm chết người”.",
+            "“Làm việc tại đây!”.",
+            "Tất cả các biển báo nêu trên đều sai.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question: "Trên rào chắn tạm thời phải treo biển cảnh báo:",
+          options: [
+            "“Cấm đóng điện! Có người đang làm việc”",
+            "“Dừng lại! Có điện nguy hiểm chết người”.",
+            "“Làm việc tại đây!”.",
+            "Tất cả các biển báo nêu trên đều sai.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Ở thiết bị phân phối điện trong nhà, trên rào lưới hoặc cửa sắt của các ngăn bên cạnh và đối  diện với chỗ làm việc phải treo biển cảnh báo:",
+          options: [
+            "Cấm đóng điện! Có người đang làm việc”.",
+            "“Dừng lại! Có điện nguy hiểm chết người”.",
+            "“Làm việc tại đây!”.",
+            "Tất cả các biển báo nêu trên đều sai.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Tại nơi làm việc, sau khi làm nối đất phải treo biển chỉ dẫn:",
+          options: [
+            "Cấm đóng điện! Có người đang làm việc”.",
+            "“Dừng lại! Có điện nguy hiểm chết người”.",
+            "“Làm việc tại đây!”.",
+            "Tất cả các biển báo nêu trên đều sai.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Trong thực hành huấn luyện phát quang cây xanh hotline, công việc nào sau đây được làm:",
+          options: [
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khoảng cách từ cây xanh, dụng cụ  đến vật mang điện nhỏ hơn 4m.",
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khoảng cách từ ngưới đến vật mang  điện nhỏ hơn 1m.",
+            "Thực hành ngay tại vị trí giả định không mang điện.",
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khả năng cây xanh có thể ngã đổ  vào đường dây.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Trong thực hành huấn luyện phát quang cây xanh hotline, công việc nào sau đây không được  làm:",
+          options: [
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khoảng cách từ cây xanh, dụng cụ  đến vật mang điện nhỏ hơn 4m.",
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khoảng cách từ ngưới đến vật mang  điện nhỏ hơn 1m.",
+            "Thực hành ngay tại vị trí nguy hiểm đang mang điện 22 kV với khả năng cây xanh có thể ngã đổ  vào đường dây.",
+            "Tất cả các công việc kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khi thực hiện huấn luyện người làm công việc có yêu cầu nghiêm ngặt về ATVSLĐ, các  công việc nào sau đây không được thực hiện:",
+          options: [
+            "Huấn luyện ngay tại ví trí làm công việc cần có chứng chỉ  đã qua sát hạch, huấn luyện tay nghề và  chứng chỉ an toàn.",
+            "Yêu cầu người học lên thực hành công việc tại vị trí nguy hiểm.",
+            "Yêu cầu người học sử dụng dụng cụ cách điện, xe chuyên dụng cách điện để chạm vào đường dây  đang mang điện cao áp.",
+            "Tất cả các công việc kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong trường hợp sự cố, tại hiện trường có 2 người, một người có trình độ an toàn bậc 2,  người còn lại có trình độ an toàn bậc 3, trách nhiệm của 2 người trong trường hợp này là:",
+          options: [
+            "Nhanh chóng liên lạc với cấp có quyền điều khiển để báo cáo sự cố, chờ lực lượng chức năng tới để  phối hợp xử lý sự cố.",
+            "Thực hiện thao tác xử lý sự cố.",
+            "Công việc thao tác đóng cắt xử lý sự cố sẽ do người có bậc an toàn bậc 3 thực hiện, giám sát sẽ do  người có bậc an toàn bậc 2.",
+            "Công việc thao tác đóng cắt xử lý sự cố sẽ do người có bậc an toàn bậc 2 thực hiện, giám sát sẽ do  người có bậc an toàn bậc 3.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Phòng tránh mối nguy từ trục cán trục cuốn khi làm việc với máy phát điện và máy bù đồng  bộ, biện pháp đề phòng tai nạn do trục cán trục cuốn là:",
+          options: [
+            "Người làm việc phải mặc gọn gàng (nữ giới phải đội mũ, tóc cuốn gọn), kiểm tra ánh sáng nơi  làm việc và các thiết bị phụ.",
+            "Xung quanh máy phát hoặc máy bù không để quần, áo và bất cứ loại vật liệu nào có thể cuốn vào  máy.",
+            "Khi làm việc phải đội mũ bảo vệ và sử dụng các công cụ bảo vệ mặt và mắt, quần áo được đóng  cúc để tránh việc bị cuốn đi bởi các phần quay của máy móc;",
+            "Tất cả các công việc kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Biện pháp an toàn khi pha chế axít:",
+          options: [
+            "Khi rót axít ra khỏi bình phải có phương tiện giữ bình để khỏi đổ vỡ. Bình chứa axít phải thật khô  và sạch sẽ;",
+            "Khi pha chế axít thành dung dịch phải rót từng tia nhỏ axít theo đũa thuỷ tinh vào bình nước cất và  luôn luôn khuấy để toả nhiệt tốt.",
+            "Cấm đổ nước cất vào axít để pha chế thành dung dịch.",
+            "Tất cả các quy định kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Biện pháp an toàn khi lưu trữ axít là:",
+          options: [
+            "Trên thành các bình chứa axít, chứa dung dịch axít, nước cất đều phải ghi rõ từng loại bằng sơn  chống axít;",
+            "Axít đậm đặc phải để trong các buồng riêng, ngoài axít ra chỉ được phép để dung dịch trung hoà;",
+            "Axít phải để trong các bình chuyên dùng bằng nhựa tổng hợp, thủy tinh hay sành sứ có nắp đậy và  quai xách;",
+            "Tất cả các quy định kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Biện pháp an toàn khi làm việc với axít là:",
+          options: [
+            "Làm việc với axít do người chuyên nghiệp thực hiện.",
+            "Vận chuyển bình axít phải có 02 người.",
+            "Chú ý kiểm tra đường đi trước để tránh trơn, trượt ngã hoặc làm đổ bình;",
+            "Tất cả các yếu tố kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Đi kiểm tra đường dây, thiết bị bằng mắt thì được phép làm việc 01 người, người đi kiểm tra  cần phải chú ý các yếu tố nguy hiểm nào có thể tồn tại:",
+          options: [
+            "Dây dẫn bị chùng võng và đứt, rơi, đường dây đang mang điện, móng cột sụt lún không đảm bảo an  toàn.",
+            "Ánh sáng không đủ để kiểm tra.",
+            "Trời tối rét lạnh",
+            "Tất cả các quy định kể trên.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Trên đường dây khi bắt đầu có gió cấp 6 trở lên sẽ có các yếu tố nguy hiểm nào xảy ra?",
+          options: [
+            "Dây đẫn bị đứt, người làm việc trên đường dây thể nằm trong khoảng cách phóng điện.",
+            "Giông sét đi kèm.",
+            "Gãy đổ, ngã trụ, dây dẫn va chạm vào nhau gây ngắn mạch, người làm việc trên đường dây có thể  bị tai nạn kèm theo hoặc bị cuốn đi.",
+            "Tất cả các nguy hiểm kể trên đều đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khi tiến hành đo nối đất đường dây đang vận hành, các yếu tố nguy hiểm nào có thể xảy ra:",
+          options: [
+            "Lưới điện bị mất tạm thời trung tính nối đất.",
+            "Dòng điện sét, dòng trung tính của lưới điện 3 pha không cân bằng, dòng điện tản trong đất.",
+            "Không có vị trí đóng cọc đo nối đất.",
+            "Vị trí đóng cọc nối đât có không đủ tiêu chuẩn.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khi phát hiện dây an toàn hết hạn sử dụng hoặc hư hỏng, người công nhân có quyền:",
+          options: [
+            "Yêu cầu đổi dây mới.",
+            "Thực hiện tiếp tục công việc nhưng đồng thời báo cáo với người trực tiếp quản lý yêu cầu đổi dây  mới.",
+            "Rời bỏ hiện trường làm việc.",
+            "Từ chối làm công việc được giao.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Khi phát hiện dụng cụ, thiết bị sử dụng thi công bị hư hỏng nghiêm trọng, có nguy cơ ảnh  hưởng đến sức khỏe của mình và nhưng người xung quanh, người công nhân có quyền:",
+          options: [
+            "Từ chối làm việc và rời bỏ nơi làm việc.",
+            "Báo cáo với người quản lý trực tiếp và rời bỏ nơi làm việc.",
+            "Ngăn chặn nguy cơ trực tiếp gây mất AT-VSLĐ, báo cáo với người quản lý trực tiếp biết và rời bỏ  nơi làm việc nếu ở lại sẽ có nguy cơ ảnh hưởng đến tính mạng và sức khỏe của mình.",
+            "Tiếp tục làm việc nhưng phải báo cáo các nguy cơ cho người quản lý trực tiếp biết.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Khi thực hiện các công việc trong trạm hay trên ĐDK điện áp cao phải có biện pháp phòng  tránh ảnh hưởng nguy hiểm điện, từ trường. Vậy các yếu tố nào sau đây là yếu tố có hại:",
+          options: [
+            "Phóng điện từ các bộ phận mang điện.",
+            "Ảnh hưởng của điện trường.",
+            "Ảnh hưởng của cảm ứng điện từ, cảm ứng tĩnh điện.",
+            "Ảnh hưởng của điện thế chạm, điện áp bước trên nối đất khi có ngắn mạch.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Khi người lao động không sử dụng thiết bị phòng tránh tác động của điện trường, nếu không  có phương tiện bảo vệ thì cường độ điện trường cho phép làm việc là:",
+          options: [
+            "Lớn hơn 25 kV/m.",
+            "Từ 25 kV/m trở xuống.",
+            "Dưới 25 kV/m.",
+            "25 kV/m.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Để phòng tránh ảnh hưởng nguy hiểm của điện trường, ở ĐDK và trạm 500 kV phải sử dụng:",
+          options: [
+            "Các thiết bị chắn điện trường",
+            "Phương tiện bảo vệ cá nhân (quần, áo, mũ, giày, chắn, kính,… )",
+            "Các thiết bị chắn điện trường hay phương tiện bảo vệ cá nhân (quần, áo, mũ, giày, chắn, kính,… ).",
+            "Các thiết bị chắn điện trường và phương tiện bảo vệ cá nhân (quần, áo, mũ, giày, chắn, kính,… ).",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Để phòng tránh rủi ro khi làm việc trên cao (từ 2m trở lên), các yêu cầu cơ bản của người làm  việc trên cao sẽ là:",
+          options: [
+            "Bắt buộc phải đeo dây an toàn, dù thời gian làm việc rất ngắn (trừ trường hợp làm việc trên sàn thao  tác có lan can bảo vệ chắc chắn).",
+            "Người làm việc trên cao phải có đầy đủ sức khỏe, không bị các bệnh về tim mạch, đau thần kinh,  động kinh,... theo quy định của Cơ quan y tế có thẩm quyền. Khi làm việ ở vị trí có độ cao so với  mặt đất trên 50 m thì trước khi làm việc phải kiểm tra lại sức khoẻ của người lao động. Phải đảm  bảo sức khỏe trong quá trình làm việc.",
+            "Quần áo phải gọn gàng, tay áo buông và cài cúc, đội mũ an toàn cài quai, đi giầy bảo hộ phải buộc  dây, đeo dây an toàn, mùa rét phải mặc đủ ấm. Trong điều kiện làm việc bình thường, không làm  việc khi có gió tới cấp 6 hay trời mưa to nặng hạt hoặc có giông sét.",
+            "Tất cả các quy định kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường được  quy định khi cường độ điện trường  đo được  nhỏ hơn 5kV/m là :",
+          options: ["Không hạn chế.", "480 phút.", "255 phút.", "180 phút."],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng  5kV/m là :",
+          options: ["Không hạn chế.", "480 phút.", "255 phút.", "180 phút."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được  tại nơi làm việc bằng 8kV/m là :",
+          options: ["Không hạn chế.", "480 phút.", "255 phút.", "180 phút."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng 10kV/m là :",
+          options: ["Không hạn chế.", "480 phút.", "255 phút.", "180 phút."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường được  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng  15kV/m là:",
+          options: ["130 phút.", "80 phút.", "48 phút.", "30 phút."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng  18kV/m là :",
+          options: ["130 phút.", "80 phút.", "48 phút.", "30 phút."],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng 20kV/m là :",
+          options: ["130 phút.", "80 phút.", "48 phút.", "30 phút."],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong các tai nạn nào sau đây có yếu tố nguồn nhiệt gây tổn thương:",
+          options: [
+            "Phóng điện hồ quang.",
+            "Điện giật trong thời gian ngắn(1 giây) do điện áp tiếp xúc.",
+            "Ngã cao.",
+            "Say nắng.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Trong các tai nạn nào sau đây có yếu tố nguồn nhiệt gây tổn thương:",
+          options: [
+            "Phóng điện hồ quang.",
+            "Điện giật trong thời gian dài do điện áp tiếp xúc.",
+            "Ngã cao",
+            "Cả a và b.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong các tai nạn nào sau đây có yếu tố vật rơi đổ sập gây tổn thương:",
+          options: [
+            "Đổ cột điện.",
+            "Dụng cụ rơi xuống người tử trên trụ",
+            "Đổ cây người khi đang phát quang.",
+            "Cả 3 trường hợp nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Các chi tiết  nào sau đây có yếu tố vật văng bắn?",
+          options: [
+            "Dây chằng trụ điện, dây căng trụ đỡ góc, dây dẫn đang căng trên trụ.",
+            "Vật cách điện đỡ, vậy cách điện treo trên đường dây.",
+            "Móng trụ, xà đỡ dây.",
+            "Dây buộc sứ",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Trong các tai nạn nào sau đây có yếu tố nguồn điện gây tổn thương:",
+          options: [
+            "Phóng điện cao áp.",
+            "Điện giật trong thời gian dài do điện áp tiếp xúc.",
+            "Ngã cao.",
+            "Cả a và b.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Khi đứng trên trụ điện, người công nhân có thể bị yêu tố nào gây hại cho sức khỏe của mình?",
+          options: [
+            "Nhiệt độ cao hơn hoặc thấp hơn tiêu chuẩn cho phép làm suy nhược cơ thể.",
+            "Mặt trời phát ra bức xạ hồng ngoại,  người công nhân có thể bị say nắng, giảm thị lực.",
+            "Mặt trời phát ra bức xạ tử ngoại, người công nhân  đau đầu, chóng mặt, giảm thị lực, bỏng.",
+            "Tất cả các yếu tố nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Làm việc trong điều kiện có tiếng ồn dễ gây các bệnh nghề nghiệp là:",
+          options: [
+            "Điếc nghề nghiệp, viêm thần kinh thực vật, rối loạn cảm giác.",
+            "Làm giảm khả năng tập trung trong lao động sản xuất, giảm khả năng nhạy bén.",
+            "Tiếp xúc với tiếng ồn lâu sẽ bị giảm thính lực,  hoặc bệnh thần kinh.",
+            "Tất cả các bệnh nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Trong môi trường lao động có nhiều tiếng ồn, ảnh hưởng của tiếng ồn có thể gây nên:",
+          options: [
+            "Bệnh  tim mạch, bệnh ngoài da.",
+            "Giảm khả năng tập trung trong lao động sản xuất, giảm khả năng nhạy bén hoặc không nghe rõ mệnh  lệnh chỉ huy.",
+            "Các bệnh về hô hấp, bệnh thấp khớp, khô niêm mạc, cảm lạnh...",
+            "Làm suy nhược cơ thể, làm tê liệt sự vận động.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question: "Độ ẩm cao có thể dẫn đến hậu quả là:",
+          options: [
+            "Tăng độ dẫn điện của vật cách điện, tăng khả năng phóng điện trong môi trường không khí.",
+            "Tăng nguy cơ nổ do bụi khí.",
+            "Cơ thể khó bài tiết qua mồ hôi.",
+            "Tất cả các nguy cơ nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Vật văng bắn có thể xuất hiện trong trường hợp sự cố nào sau đây:",
+          options: [
+            "Chạm chập điện.",
+            "Nhiệt độ tăng cao quá giới hạn cho phép của máy biến áp, máy biến áp bị cháy làm dầu MBA sôi  lên.",
+            "Máy biến áp bị chảy dầu",
+            "Tất cả các sự cố nêu trên.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Chiếu sáng không đảm bảo làm tăng phế phẩm, giảm năng suất lao động, dễ gây ra tai nạn  lao động. Vì vậy trong ngành điện quy định làm ban đêm trên lưới điện là:",
+          options: [
+            "Chỉ được đứng dưới trụ điện để kiểm tra.",
+            "Phải có đèn soi và đủ ánh sáng.",
+            "Không được làm việc trên lưới điện ban đêm trừ trường hợp đặc biệt.",
+            "Tất cả các quy định nêu trên đều đúng.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Mức độ nguy hiểm, có hại của bụi phụ thuộc vào tính chất lý học, hóa học của bụi. Bụi có  các tác hại với thiết bị điện là:",
+          options: [
+            "Có thể gây cháy hoặc nổ ở nơi có điều kiện thích hợp ; làm giảm khả năng cách điện của bộ phận  cách điện, gây chập mạch; Gây mài mòn thiết bị trước thời hạn;",
+            "Làm tổn thương cơ quan hô hấp xây sát, viêm kinh niên, tuỳ theo loại bụi có thể dẫn đến viêm phổi,  ung thư phổi.",
+            "Gây bệnh ngoài da; Gây tổn thương mắt.",
+            "Tất cả các tác hại nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Mức độ nguy hiểm, có hại của bụi phụ thuộc vào tính chất lý học, hóa học của bụi. Bụi có  các tác hại với con người là:",
+          options: [
+            "Làm tổn thương cơ quan hô hấp xây sát, viêm kinh niên, tuỳ theo loại bụi có thể dẫn đến viêm phổi,  ung thư phổi.",
+            "Gây bệnh ngoài da;",
+            "Gây tổn thương mắt.",
+            "Bao gồm cả 3 nội dung đánh giá kể trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Mục đích che chắn các thiết bị là:",
+          options: [
+            "Cách ly vùng nguy hiểm và người lao động;",
+            "Ngăn ngừa người lao động rơi, tụt, ngã hoặc vật rơi, văng bắn vào người lao động.",
+            "Cách ly vùng nguy hiểm và người lao động; Ngăn ngừa người lao động rơi, tụt, ngã hoặc vật rơi,  văng bắn vào người lao động.Ngăn ngừa được tác động xấu do bộ phận của thiết bị sản xuất gây ra;",
+            "Phân biệt vùng làm việc thiết bị này với thiết bị khác.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Yêu cầu cơ bản đối với thiết bị che chắn là:",
+          options: [
+            "Không gây trở ngại cho thao tác của người lao động;",
+            "Không ảnh hưởng đến năng suất lao động, công suất của thiết bị, Dễ dàng tháo lắp, sửa chữa khi cần  thiết.",
+            "Giá thành rẻ.",
+            "Không gây trở ngại cho thao tác của người lao động, Không ảnh hưởng đến năng suất lao động, công  suất của thiết bị, Dễ dàng tháo lắp, sửa chữa khi cần thiết.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Các nhóm nào sau đây thuộc nhóm thiết bị bảo hiểm, phòng ngừa.",
+          options: [
+            "Cầu dao, cầu chì, kềm cách điện",
+            "Hộp chống ngã cao, dây an toàn, ty leo.",
+            "Hộp chống ngã cao, cầu chì, ELCB.",
+            "Găng tay cách điện, kềm cách điện, bút thử điện",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question: "Khái niệm khoảng cách an toàn được hiểu là:",
+          options: [
+            "Khoảng không gian nhỏ nhất giữa người lao động và các loại phương tiện, thiết bị.",
+            "Khoảng cách nhỏ nhất giữa các loại phương tiện, thiết bị, vật tư với nhau để không bị tác động xấu  của các yếu tố sản xuất.",
+            "Khoảng cách nhỏ nhất giữa các loại phương tiện, thiết bị, vật tư với nhau để không bị tác động xấu  của các yếu tố kỹ thuật như khoảng cách giữa các dây dẫn, khoảng cách dây dẫn đến các thiết bị.",
+            "Bao gồm các yếu tố nêu trên.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Thời điểm đánh giá rủi ro theo quyết định 2327/EVN-SPC ngày 19/8/2018  là:",
+          options: [
+            "Đánh giá lần đầu: Tổ chức đánh giá lần đầu khi đưa công trình, thiết bị vào vận hành, sử dụng, quản  lý.",
+            "Đánh giá định kỳ: Ít nhất mỗi năm 01 lần, đơn vị, cơ sở phải tổ chức đánh giá theo quy định.",
+            "Đánh giá bổ sung (trước khi tiến hành công việc): Trước khi tổ chức sản xuất (sửa chữa, tổ chức thi  công, làm việc...) trên lưới điện, hoặc khi xảy ra tai nạn lao động, sự cố gây mất an toàn, vệ sinh lao  động nghiêm trọng.",
+            "Bao gồm 3 thời điểm: đánh giá lần đầu, đánh giá định kì, và đánh giá bổ sung.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question: "Việc xem xét và xác định mối nguy phải dựa trên cơ sở:",
+          options: [
+            "Mối nguy xuất hiện từ bên ngoài hay bên trong nơi làm việc.Mối nguy do các hoạt động, kiểm soát  của tổ chức khác gây ra…",
+            "Khả năng tiếp cận mối nguy của con người khi làm việc. Mức độ tiếp cận mối nguy. Mối nguy xuất  hiện từ bên ngoài hay bên trong nơi làm việc.Mối nguy do các hoạt động, kiểm soát của tổ chức  khác gây ra...",
+            "Khả năng tiếp cận mối nguy của con người khi làm việc. Mối nguy xuất hiện từ bên ngoài hay bên  trong nơi làm việc.",
+            "Mối nguy xuất hiện từ bên ngoài hay bên trong nơi làm việc.Mối nguy do các hoạt động, kiểm soát  của tổ chức khác gây ra...",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Các biện pháp rủi ro theo trình tự ưu tiên của tính hiệu quả là:",
+          options: [
+            "Thay thế để giảm bớt tính nguy hại-Kiểm soát bằng dụng cụ bảo vệ cá nhân, trang cụ an toàn, phương  tiện thi công-Loại bỏ mối nguy-Kiểm soát bằng biện pháp kỹ thuật-Kiểm soát bằng biện pháp hành  chính( Thông báo, cảnh báo, quy định)",
+            "Kiểm soát bằng biện pháp hành chính( Thông báo, cảnh báo, quy định)-Thay thế để giảm bớt tính  nguy hại-Loại bỏ mối nguy-Kiểm soát bằng biện pháp kỹ thuật- Kiểm soát bằng dụng cụ bảo vệ cá  nhân, trang cụ an toàn, phương tiện thi công…",
+            "Loại bỏ mối nguy-Thay thế để giảm bớt tính nguy hại-Kiểm soát bằng biện pháp kỹ thuật-Kiểm soát  bằng biện pháp hành chính( Thông báo, cảnh báo, quy định)- Kiểm soát bằng dụng cụ bảo vệ cá  nhân, trang cụ an toàn, phương tiện thi công…",
+            "Loại bỏ mối nguy-Thay thế để giảm bớt tính nguy hại-Kiểm soát bằng biện pháp kỹ thuật-Kiểm soát  bằng biện pháp hành chính( Thông báo, cảnh báo, quy định)- Kiểm soát bằng dụng cụ bảo vệ cá  nhân, trang cụ an toàn, phương tiện thi công…",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Nội dung kiểm soát các yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc theo Nghị định  39/2016/NĐ-CP quy định là:",
+          options: [
+            "Xác định Mục tiêu và các biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại. Triển khai  và đánh giá hiệu quả các biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại.",
+            "Nhận diện và đánh giá các yếu tố nguy hiểm, yếu tố có hại. Xác định Mục tiêu và các biện pháp  phòng, chống các yếu tố nguy hiểm, yếu tố có hại.",
+            "Nhận diện và đánh giá các yếu tố nguy hiểm, yếu tố có hại. Xác định Mục tiêu và các biện pháp  phòng, chống các yếu tố nguy hiểm, yếu tố có hại. Triển khai và đánh giá hiệu quả các biện pháp  phòng, chống các yếu tố nguy hiểm, yếu tố có hại.",
+            "Nhận diện các yếu tố nguy hiểm, yếu tố có hại. Triển khai và đánh giá hiệu quả các biện pháp phòng,  chống các yếu tố nguy hiểm, yếu tố có hại.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Nhận diện và đánh giá các yếu tố nguy hiểm, yếu tố có hại được hướng dẫn thi hành tại Nghị  định 39/2016/NĐ-CP là công việc:",
+          options: [
+            "Phân tích đặc điểm điều kiện lao động, quy trình làm việc có liên quan và kết quả kiểm tra nơi làm  việc; Khảo sát người lao động về những yếu tố có thể gây tổn thương, bệnh tật, làm suy giảm sức  khỏe của họ tại nơi làm việc; Sử dụng máy, thiết bị phù hợp để đo, kiểm các yếu tố nguy hiểm, yếu  tố có hại  trong trường hợp không nhận diện, đánh giá được đầy đủ, chính xác bằng cảm quan. Lập  hồ sơ vệ sinh môi trường lao động đối với các yếu tố có hại, phòng chống bệnh nghề nghiệp.",
+            "Khi đã xảy ra tai nạn lao động, bệnh nghề nghiệp thì căn cứ vào đó để phân tích đặc điểm điều kiện  lao động; Khảo sát người lao động về những yếu tố có thể gây tổn thương, bệnh tật; Sử dụng máy,  thiết bị phù hợp để đo, kiểm các yếu tố nguy hiểm, yếu tố có hại;",
+            "Sử dụng máy, thiết bị phù hợp để đo, kiểm các yếu tố nguy hiểm, yếu tố có hại; lập hồ sơ vệ sinh  môi trường lao động đối với các yếu tố có hại, phòng chống bệnh nghề nghiệp trong trường hợp  không nhận diện, đánh giá được đầy đủ, chính xác bằng cảm quan.",
+            "Khảo sát người lao động về những yếu tố đã gây tổn thương tại nơi làm việc; Sử dụng máy, thiết bị  phù hợp để đo, kiểm các yếu tố nguy hiểm, yếu tố có hại trong trường hợp không nhận diện, đánh  giá được đầy đủ, chính xác bằng cảm quan; lập hồ sơ vệ sinh môi trường lao động đối với các yếu  tố có hại, phòng chống bệnh nghề nghiệp.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Xác định mục tiêu và biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại theo  nghị định 39/2016/NĐ-CP có các hạng mục như sau:  A. Ngăn chặn, hạn chế sự tiếp xúc, giảm thiểu tác hại của các yếu tố nguy hiểm, yếu tố có hại bằng việc  sử dụng các biện pháp kỹ thuật và áp dụng các biện pháp tổ chức, hành chính (thông tin, tuyên truyền,  giáo dục, huấn luyện an toàn, vệ sinh lao động; xây dựng nội quy, quy trình làm việc an toàn, vệ sinh  lao động; chế độ bảo hộ lao động, chăm sóc sức khỏe người lao động; quản lý máy, thiết bị, vật tư,  chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động).  B. Xác định rõ thời gian, địa điểm và nguồn lực để thực hiện Mục tiêu, biện pháp phòng, chống các yếu  tố nguy hiểm, yếu tố có hại.  C. Loại trừ các yếu tố nguy hiểm, yếu tố có hại ngay từ khâu thiết kế nhà xưởng, lựa chọn công nghệ,  thiết bị, nguyên vật liệu;  Vậy thứ tự ưu tiên sẽ là:",
+          options: ["A-B-C.", "C-A-B.", "C-B-A.", "A-C-B."],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, người sử dụng lao động phải lập kế hoạch và tổ chức kiểm  tra, đánh giá hiệu quả các biện pháp phòng, chống yếu tố nguy hiểm, yếu tố có hại ít nhất:",
+          options: [
+            "01 lần/2năm.",
+            "01 lần/năm.",
+            "02 lần/năm.",
+            "6 tháng 1 lần.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, đối với các nguyên nhân do máy móc thiết bị vật tư dẫn đến  TNLĐ hoặc BNN,  việc kiểm tra biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại tại nơi  làm việc là:",
+          options: [
+            "Kiểm tra tình trạng an toàn, vệ sinh lao động của máy, thiết bị, nhà xưởng, kho tàng và nơi làm việc;",
+            "Kiểm tra việc sử dụng, bảo quản phương tiện bảo vệ cá nhân; phương tiện phòng cháy, chữa cháy;  các loại thuốc thiết yếu, phương tiện sơ cứu, cấp cứu tại chỗ;",
+            "Kiểm tra việc quản lý, sử dụng máy, thiết bị, vật tư, chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh  lao động;",
+            "Bao gồm các nội dung đã nêu.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, đối với cơ sở sản xuất-kinh doanh, việc triển khai và đánh  giá hiệu quả các biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại sẽ  phải được kiểm tra,  đánh giá đến cấp:",
+          options: [
+            "Công ty.",
+            "Chi nhánh.",
+            "Tổ, đội, phân xưởng.",
+            "Từng cá nhân.",
+          ],
+          correctAnswerIndex: 2,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, đối với các nguyên nhân do máy móc thiết bị vật tư dẫn đến  TNLĐ hoặc BNN,  việc kiểm tra biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại tại nơi  làm việc là:",
+          options: [
+            "Kiểm tra tình trạng an toàn, vệ sinh lao động của máy, thiết bị, nhà xưởng, kho tàng và nơi làm việc;",
+            "Kiểm tra việc sử dụng, bảo quản phương tiện bảo vệ cá nhân; phương tiện phòng cháy, chữa cháy;  các loại thuốc thiết yếu, phương tiện sơ cứu, cấp cứu tại chỗ;",
+            "Kiểm tra việc quản lý, sử dụng máy, thiết bị, vật tư, chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh  lao động;",
+            "Bao gồm các nội dung đã nêu.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, đối với các nguyên nhân do chủ quan dẫn đến TNLĐ hoặc  BNN, việc kiểm tra biện pháp phòng, chống các yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc là:",
+          options: [
+            "Kiểm tra kiến thức và khả năng của người lao động trong xử lý sự cố, ứng cứu khẩn cấp;",
+            "Kiểm tra việc thực hiện chế độ bảo hộ lao động, chăm sóc sức khỏe người lao động;",
+            "Kiểm tra việc thực hiện kiến nghị của các đoàn thanh tra, kiểm tra an toàn, vệ sinh lao động, Điều  tra tai nạn lao động.",
+            "Bao gồm các nội dung đã nêu.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, hiệu quả biện pháp phòng, chống yếu tố nguy hiểm, yếu tố  có hại tại nơi làm việc được thể hiện ở:",
+          options: [
+            "Nội dung đánh giá việc tổ chức triển khai các biện pháp phòng, chống yếu tố nguy hiểm, yếu tố có  hại tại nơi làm việc và kết quả cải thiện điều kiện lao động.",
+            "Kết quả cải thiện điều kiện lao động.",
+            "Sự đầu tư vào dây chuyền công nghệ.",
+            "Việc chăm sóc sức khỏe cho người lao động.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, nội dung phương án xử lý sự cố kỹ thuật gây mất an toàn,  vệ sinh lao động nghiêm trọng quy định tại Khoản 1 Điều 19 Luật An toàn, vệ sinh lao động là:",
+          options: [
+            "Lực lượng tham gia xử lý sự cố tại chỗ và nhiệm vụ của từng thành viên tham gia; lực lượng hỗ trợ  từ các cơ sở sản xuất, kinh doanh lân cận;",
+            "Phương tiện kỹ thuật phải có theo quy định của pháp luật chuyên ngành; thiết bị đo lường cần thiết  dùng trong quá trình xử lý sự cố (các thiết bị này phải được kiểm định, hiệu chuẩn theo quy định  hiện hành của pháp luật về đo lường);",
+            "Cách thức, trình tự xử lý sự cố.",
+            "Bao gồm các nội dung đã nêu.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP,  Biện pháp xử lý sự cố kỹ thuật gây mất an toàn, vệ sinh lao  động nghiêm trọng và ứng cứu khẩn cấp là:",
+          options: [
+            "Duyệt hoặc gửi cơ quan có thẩm quyền phê duyệt khi xây dựng phương án xử lý sự cố kỹ thuật gây  mất an toàn, vệ sinh lao động nghiêm trọng. Định kỳ tổ chức diễn tập phương án xử lý sự cố kỹ thuật  gây mất an toàn, vệ sinh lao động nghiêm trọng theo quy định của pháp luật chuyên ngành. Kịp thời  thông báo cho chính quyền địa phương khi xảy ra sự cố kỹ thuật gây mất an toàn, vệ sinh lao động  nghiêm trọng theo quy định.",
+            "Xử lý sự cố tại chỗ và tổ chức lực lượng hỗ trợ từ các cơ sở sản xuất, kinh doanh lân cận;",
+            "Cách thức, trình tự xử lý sự cố.",
+            "Định kỳ tổ chức diễn tập phương án xử lý sự cố kỹ thuật gây mất an toàn, vệ sinh lao động nghiêm  trọng theo quy định của pháp luật chuyên ngành. Kịp thời thông báo cho chính quyền địa phương  khi xảy ra sự cố kỹ thuật gây mất an toàn, vệ sinh lao động nghiêm trọng theo quy định.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Tai nạn lao động phân loại theo mức độ thiệt hại về con người theo nghị định 39/2016/NĐ CP là:",
+          options: [
+            "Tai nạn lao động nặng và tai nạn lao động nhẹ.",
+            "Tai nạn lao động chết người, Tai nạn lao động nặng và tai nạn lao động nhẹ.",
+            "Tai nạn lao động chết người, Tai nạn lao động nặng.",
+            "Tai nạn lao động chết người, Tai nạn lao động không chết người.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Việc thành lập đoàn điều tra tai nạn lao động cấp cơ sở được thực hiện khi:",
+          options: [
+            "Xảy ra tai nạn lao động nhẹ hoặc tai nạn lao động làm bị thương nặng 01 người lao động thuộc thẩm  quyền quản lý của người sử dụng lao động.",
+            "Ngay khi biết tin xảy ra tai nạn lao động.",
+            "Người sử dụng lao động (hoặc người được ủy quyền bằng văn bản) làm trưởng đoàn.",
+            "Người sử dụng lao động phải thành lập ngay Đoàn Điều tra tai nạn lao động cấp cơ sở khi biết tin  xảy ra tai nạn lao động nhẹ hoặc tai nạn lao động làm bị thương nặng 01 người lao động thuộc thẩm  quyền quản lý của người sử dụng lao động quy định tại Khoản 1 Điều 35 Luật An toàn, vệ sinh lao  động,",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP,  nhiệm vụ các thành viên đoàn điều tra tai nạn lao động là:",
+          options: [
+            "Thực hiện nhiệm vụ do trưởng đoàn phân công và tham gia vào hoạt động chung của đoàn điều tra;  Có quyền nêu và bảo lưu ý kiến; trường hợp không thống nhất với quyết định của trưởng đoàn điều  tra tai nạn lao động thì báo cáo lãnh đạo cơ quan cử tham gia đoàn điều tra; không được tiết lộ thông  tin, tài liệu trong quá trình điều tra khi chưa công bố biên bản điều tra tai nạn lao động.",
+            "Giữ hiện trường trước khi tiến hành điều tra.",
+            "Bảo vệ quyên lợi cho người lao động.",
+            "Bao gồm những nhiệm vụ nêu trên.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP,  trong một vụ tai nạn lao động, nếu có nhiều người bị tai  nạn lao động thì việc lập hồ sơ tai nạn lao động được quy định là:",
+          options: [
+            "Mỗi người bị tai nạn lao động được lập một bộ hồ sơ riêng.",
+            "Những người bị tai nạn sẽ lưu hồ sơ chung.",
+            "Những người bị tai nạn chết người sẽ lưu hồ sơ chung, Mỗi người bị tai nạn lao động nhẹ được lập  một bộ hồ sơ riêng.",
+            "Những người bị tai nạn chết người sẽ lưu hồ sơ chung, những người bị tai nạn lao động nặng và nhẹ  được lập một bộ hồ sơ riêng.",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP,  Người sử dụng lao động lưu trữ hồ sơ tai nạn lao động  theo quy định là:",
+          options: [
+            "15 năm đối với vụ tai nạn lao động chết người; 10 năm đối với vụ tai nạn lao động khác.",
+            "15 năm đối với vụ tai nạn lao động chết người; Đến khi người bị tai nạn lao động nghỉ hưu đối với  vụ tai nạn lao động khác.",
+            "10 năm đối với vụ tai nạn lao động chết người; 5 năm đối với vụ tai nạn lao động khác.",
+            "10 năm đối với vụ tai nạn lao động chết người; Đến khi người bị tai nạn lao động nghỉ hưu đối với  vụ tai nạn lao động khác.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Việc tổ chức bộ phận an toàn, vệ sinh lao động theo Khoản 1 Điều 72 Luật An toàn, vệ  sinh lao động  ở ngành sản xuất, truyền tải và phân phối điện, được quy định là:",
+          options: [
+            "50 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động theo chế độ  bán chuyên trách;",
+            "Dưới 50 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động theo chế  độ bán chuyên trách.",
+            "50 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động theo chế độ  chuyên trách;",
+            "Dưới 50 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động theo chế  độ chuyên trách.",
+          ],
+          correctAnswerIndex: 1,
+        },
+        {
+          question:
+            "Việc tổ chức bộ phận an toàn, vệ sinh lao động theo Khoản 1 Điều 72 Luật An toàn, vệ  sinh lao động  ở ngành sản xuất, truyền tải và phân phối điện, được quy định là:",
+          options: [
+            "Từ 50 đến dưới 300 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao  động theo chế độ chuyên trách.",
+            "Từ 50 đến 300 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động  theo chế độ chuyên trách;",
+            "Từ 50 đến dưới 300 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao  động theo chế độ bán chuyên trách;",
+            "Từ 50 đến 300 người lao động phải bố trí ít nhất 01 người làm công tác an toàn, vệ sinh lao động  theo chế độ bán chuyên trách;",
+          ],
+          correctAnswerIndex: 0,
+        },
+        {
+          question:
+            "Việc tổ chức bộ phận an toàn, vệ sinh lao động theo Khoản 1 Điều 72 Luật An toàn, vệ  sinh lao động  ở ngành sản xuất, truyền tải và phân phối điện, được quy định là:",
+          options: [
+            "Cơ sở sản xuất, kinh doanh sử dụng từ 300 đến 1.000 người lao động, phải bố trí ít nhất 02 người  làm công tác an toàn, vệ sinh lao động theo chế độ chuyên trách;",
+            "Cơ sở sản xuất, kinh doanh sử dụng từ 300 đến dưới 1.000 người lao động, phải bố trí ít nhất 02  người làm công tác an toàn, vệ sinh lao động theo chế độ chuyên trách;",
+            "Cơ sở sản xuất, kinh doanh sử dụng sử dụng trên 1.000 người lao động phải thành lập phòng an toàn,  vệ sinh lao động hoặc bố trí ít nhất 03 người làm công tác an toàn, vệ sinh lao động theo chế độ  chuyên trách.",
+            "Cả b và c đúng.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Theo nghị định 39/2016/NĐ-CP, chỉ được xóa bỏ hiện trường và mai táng tử thi (nếu có) sau  khi:",
+          options: [
+            "Đã hoàn thành các bước điều tra theo quy định của nghị định này.",
+            "Được sự đồng ý bằng văn bản của đoàn điều tra tai nạn lao động cấp tỉnh.",
+            "Đã hoàn thành các bước điều tra theo quy định của nghị định này, được sự đồng ý bằng văn bản của  đoàn điều tra tai nạn lao động cấp tỉnh và của cơ quan công an.",
+            "Đã hoàn thành các bước điều tra theo quy định của nghị định này, được sự đồng ý bằng văn bản của  đoàn điều tra tai nạn lao động cấp tỉnh hoặc sự đồng ý bằng văn bản của cơ quan công an.",
+          ],
+          correctAnswerIndex: 3,
+        },
+        {
+          question:
+            "Thời gian cho phép làm việc trong một ngày đêm phụ thuộc vào cường độ điện trường dược  quy định khi cường độ điện trường  đo được tại nơi làm việc bằng 12kV/m là :",
+          options: ["130 phút.", "80 phút.", "48 phút.", "30 phút."],
+          correctAnswerIndex: 0,
         },
       ];
-
       let shuffledQuestions = shuffleArray([...questionsData]);
       let currentQuestionIndex = 0;
       let chosenAnswers = {};
@@ -200,27 +2146,28 @@
       function displayQuestion() {
         const questionData = shuffledQuestions[currentQuestionIndex];
 
-        questionElement.textContent = `${currentQuestionIndex + 1}. ${
-          questionData.question
-        }`;
+        highlightActiveQuestionNav();
+
+        questionElement.textContent = `${
+          currentQuestionIndex + 1
+        }. ${cleanString(questionData.question)}`;
         optionsElement.innerHTML = "";
 
         questionData.options.forEach((option, index) => {
           const optionLabel = document.createElement("label");
           optionLabel.innerHTML = `
           <input type="radio" name="question" value="${index}">
-          ${option}
+          ${cleanString(option)}
         `;
           optionsElement.appendChild(optionLabel);
 
+          // Bỏ phần kiểm tra đáp án khi chọn
           const radioInput = optionLabel.querySelector(
             'input[name="question"]'
           );
           radioInput.addEventListener("change", () => {
-            checkAnswer(index); // Kiểm tra và tô màu ngay khi chọn
             chosenAnswers[currentQuestionIndex] = index;
             updateQuestionNav();
-            disableRadioButtons();
           });
         });
 
@@ -228,14 +2175,13 @@
         nextButton.disabled =
           currentQuestionIndex === shuffledQuestions.length - 1;
 
-        // Chọn lại đáp án và cập nhật màu sắc nếu đã chọn trước đó
+        // Chọn lại đáp án nếu đã chọn trước đó (không cần check đáp án)
         if (currentQuestionIndex in chosenAnswers) {
           const selectedIndex = chosenAnswers[currentQuestionIndex];
           const options = optionsElement.querySelectorAll(
             'input[name="question"]'
           );
           options[selectedIndex].checked = true;
-          checkAnswer(selectedIndex);
         }
       }
 
@@ -256,21 +2202,22 @@
       function updateQuestionNav() {
         const navItems = questionNav.querySelectorAll("li");
         navItems.forEach((item, index) => {
-          item.classList.remove("active", "correct", "incorrect");
+          item.classList.remove("active", "correct", "incorrect"); // Loại bỏ tất cả các class
 
           if (index === currentQuestionIndex) {
-            item.classList.add("active");
+            item.classList.add("active"); // Chỉ thêm class "active"
           }
 
-          if (index in chosenAnswers) {
-            if (
-              chosenAnswers[index] ===
-              shuffledQuestions[index].correctAnswerIndex
-            ) {
-              item.classList.add("correct");
-            } else {
-              item.classList.add("incorrect");
-            }
+          // Bỏ phần tô màu sidebar ở đây
+        });
+      }
+
+      function highlightActiveQuestionNav() {
+        const navItems = questionNav.querySelectorAll("li");
+        navItems.forEach((item, index) => {
+          item.classList.remove("active");
+          if (index === currentQuestionIndex) {
+            item.classList.add("active");
           }
         });
       }
@@ -288,18 +2235,153 @@
           displayQuestion();
         }
       }
+      let startTime = null;
+      let timerInterval = null;
+
+      function startTimer() {
+        if (startTime === null) {
+          startTime = Date.now();
+          timerInterval = setInterval(updateTimer, 1000);
+          document.getElementById("startButton").textContent = "Tính điểm";
+          document.getElementById("startButton").onclick = calculateScore;
+        }
+      }
+
+      function updateTimer() {
+        const elapsedTime = Date.now() - startTime;
+        const minutes = Math.floor(elapsedTime / (1000 * 60))
+          .toString()
+          .padStart(2, "0");
+        const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000)
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+      }
+
+      function resetTimer() {
+        clearInterval(timerInterval);
+        startTime = null;
+        document.getElementById("timer").textContent = "00:00";
+      }
 
       function calculateScore() {
         let correctCount = 0;
+        let wrongAnswers = [];
+
         for (let i = 0; i < shuffledQuestions.length; i++) {
           if (
             i in chosenAnswers &&
             chosenAnswers[i] === shuffledQuestions[i].correctAnswerIndex
           ) {
             correctCount++;
+          } else {
+            wrongAnswers.push({
+              question: shuffledQuestions[i].question,
+              options: shuffledQuestions[i].options,
+              correctAnswerIndex: shuffledQuestions[i].correctAnswerIndex,
+              chosenAnswerIndex: i in chosenAnswers ? chosenAnswers[i] : null,
+              indexQuestion: i + 1,
+            });
           }
         }
+
         scoreContainer.textContent = `Điểm của bạn: ${correctCount}/${shuffledQuestions.length}`;
+
+        // Dừng và hiển thị thời gian đã làm
+        clearInterval(timerInterval);
+        const elapsedTime = Date.now() - startTime;
+        const minutes = Math.floor(elapsedTime / (1000 * 60))
+          .toString()
+          .padStart(2, "0");
+        const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000)
+          .toString()
+          .padStart(2, "0");
+        document.getElementById(
+          "timer"
+        ).textContent = `Thời gian đã làm: ${minutes}:${seconds}`;
+
+        displayWrongAnswers(wrongAnswers);
+        checkAllAnswers();
+        updateQuestionNavAfterScore();
+      }
+      function displayWrongAnswers(wrongAnswers) {
+        const wrongAnswersList = document.getElementById("wrongAnswersList");
+        wrongAnswersList.innerHTML = "";
+
+        if (wrongAnswers.length === 0) {
+          const listItem = document.createElement("li");
+          listItem.textContent = "Chúc mừng bạn đã trả lời đúng tất cả!";
+          wrongAnswersList.appendChild(listItem);
+          return;
+        }
+
+        console.log(wrongAnswers);
+        wrongAnswers.forEach((item, index) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+          <b>Câu hỏi ${item.indexQuestion}:</b> ${cleanString(
+            item.question
+          )}<br>
+        `;
+
+          // Hiển thị các lựa chọn
+          const optionsContainer = document.createElement("div");
+          const optionABCD = ["a. ", "b. ", "c. ", "d. "];
+          item.options.forEach((option, optionIndex) => {
+            const optionDiv = document.createElement("div");
+            optionDiv.textContent =
+              optionABCD[optionIndex] + cleanString(option);
+            optionDiv.classList.add("answer-option");
+
+            if (optionIndex === item.correctAnswerIndex) {
+              optionDiv.classList.add("correct");
+            } else if (
+              item.chosenAnswerIndex !== null &&
+              optionIndex === item.chosenAnswerIndex
+            ) {
+              optionDiv.classList.add("incorrect");
+            }
+
+            optionsContainer.appendChild(optionDiv);
+          });
+
+          listItem.appendChild(optionsContainer);
+          wrongAnswersList.appendChild(listItem);
+        });
+      }
+      function checkAllAnswers() {
+        for (let i = 0; i < shuffledQuestions.length; i++) {
+          const correctIndex = shuffledQuestions[i].correctAnswerIndex;
+          const options = optionsElement.querySelectorAll("label");
+
+          options.forEach((label, index) => {
+            const radioInput = label.querySelector('input[type="radio"]');
+            radioInput.disabled = true; // Vô hiệu hóa radio button sau khi tính điểm
+
+            if (index === correctIndex) {
+              label.style.color = "green";
+            } else if (i in chosenAnswers && index === chosenAnswers[i]) {
+              label.style.color = "red";
+            }
+          });
+        }
+      }
+
+      function updateQuestionNavAfterScore() {
+        // Hàm cập nhật sidebar sau khi tính điểm
+        const navItems = questionNav.querySelectorAll("li");
+        navItems.forEach((item, index) => {
+          if (index in chosenAnswers) {
+            if (
+              chosenAnswers[index] ===
+              shuffledQuestions[index].correctAnswerIndex
+            ) {
+              item.classList.add("correct");
+            } else {
+              item.classList.add("incorrect");
+            }
+          }
+        });
       }
 
       function resetQuiz() {
@@ -311,24 +2393,12 @@
         scoreContainer.textContent = "";
         displayQuestion();
         displayQuestionNav();
+        resetTimer(); // Reset timer khi bấm "Làm lại"
+
+        document.getElementById("startButton").textContent = "Bắt đầu làm bài";
+        document.getElementById("startButton").onclick = startTimer;
       }
 
-      function checkAnswer(selectedIndex) {
-        const correctIndex =
-          shuffledQuestions[currentQuestionIndex].correctAnswerIndex;
-        const options = optionsElement.querySelectorAll("label"); // Chọn tất cả các label
-
-        // Reset màu sắc cho tất cả các đáp án
-        options.forEach((label) => {
-          label.style.color = "black";
-        });
-
-        // Tô màu đáp án đúng/sai
-        options[correctIndex].style.color = "green";
-        if (selectedIndex !== correctIndex) {
-          options[selectedIndex].style.color = "red";
-        }
-      }
       function disableRadioButtons() {
         const radioButtons = optionsElement.querySelectorAll(
           'input[type="radio"]'
@@ -336,6 +2406,13 @@
         radioButtons.forEach((radio) => {
           radio.disabled = true;
         });
+      }
+      function cleanString(str) {
+        // Loại bỏ dấu nháy ở đầu và cuối câu
+        str = str.replace(/^"/, "").replace(/"$/, "");
+        // Loại bỏ các dấu \ thừa
+        str = str.replace(/\\/g, "");
+        return str;
       }
 
       displayQuestion();

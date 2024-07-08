@@ -1,63 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nhập câu hỏi</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        button {
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+      .radio-group {
+        display: flex;
+        align-items: center;
+      }
+      .radio-group label {
+        margin-right: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Nhập câu hỏi</h1>
+
     <div>
-        <label for="question">Câu hỏi:</label>
-        <input type="text" id="question" required>
+      <label for="quickInput"
+        >Nhập nhanh câu hỏi (ví dụ: "Câu hỏi: ...\nA. ...\nB. ..."):</label
+      >
+      <textarea id="quickInput" rows="6" onblur="parseQuickInput()"></textarea>
+    </div>
+
+    <div>
+      <label for="question">Câu hỏi:</label>
+      <input type="text" id="question" required />
     </div>
     <div>
-        <label for="optionA">Đáp án A:</label>
-        <input type="text" id="optionA" required>
+      <label for="optionA">Đáp án A:</label>
+      <input type="text" id="optionA" required />
     </div>
     <div>
-        <label for="optionB">Đáp án B:</label>
-        <input type="text" id="optionB" required>
+      <label for="optionB">Đáp án B:</label>
+      <input type="text" id="optionB" required />
     </div>
     <div>
-        <label for="optionC">Đáp án C:</label>
-        <input type="text" id="optionC" required>
+      <label for="optionC">Đáp án C:</label>
+      <input type="text" id="optionC" required />
     </div>
     <div>
-        <label for="optionD">Đáp án D:</label>
-        <input type="text" id="optionD" required>
+      <label for="optionD">Đáp án D:</label>
+      <input type="text" id="optionD" required />
     </div>
+
     <div>
-        <label for="correctAnswer">Đáp án đúng (A=0, B=1, C=2, D=3):</label>
-        <input type="number" id="correctAnswer" min="0" max="3" required>
+      <label>Đáp án đúng:</label>
+      <div class="radio-group">
+        <input
+          type="radio"
+          id="correctAnswer0"
+          name="correctAnswer"
+          value="0"
+          required
+        />
+        <label for="correctAnswer0">A</label>
+        <input
+          type="radio"
+          id="correctAnswer1"
+          name="correctAnswer"
+          value="1"
+          required
+        />
+        <label for="correctAnswer1">B</label>
+        <input
+          type="radio"
+          id="correctAnswer2"
+          name="correctAnswer"
+          value="2"
+          required
+        />
+        <label for="correctAnswer2">C</label>
+        <input
+          type="radio"
+          id="correctAnswer3"
+          name="correctAnswer"
+          value="3"
+          required
+        />
+        <label for="correctAnswer3">D</label>
+      </div>
     </div>
+
     <button onclick="addQuestion()">Thêm câu hỏi</button>
-    <hr>
+    <hr />
     <h2>Danh sách câu hỏi</h2>
     <ul id="questionList"></ul>
     <button onclick="downloadQuestions()">Tải danh sách câu hỏi (JSON)</button>
 
-    <script src="script2.js"></script>
-</body>
+    <script>
+      let questions = [];
+
+      function parseQuickInput() {
+        const quickInputText = document.getElementById("quickInput").value;
+        const lines = quickInputText.split("\n");
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+
+          if (i === 0) {
+            document.getElementById("question").value = line.trim();
+          } else if (line.startsWith("a.")) {
+            document.getElementById("optionA").value = line
+              .replace("a.", "")
+              .trim();
+          } else if (line.startsWith("b.")) {
+            document.getElementById("optionB").value = line
+              .replace("b.", "")
+              .trim();
+          } else if (line.startsWith("c.")) {
+            document.getElementById("optionC").value = line
+              .replace("c.", "")
+              .trim();
+          } else if (line.startsWith("d.")) {
+            document.getElementById("optionD").value = line
+              .replace("d.", "")
+              .trim();
+          }
+        }
+
+        document.getElementById("quickInput").value = "";
+      }
+
+      function addQuestion() {
+        const question = document.getElementById("question").value.trim();
+        const optionA = document.getElementById("optionA").value.trim();
+        const optionB = document.getElementById("optionB").value.trim();
+        const optionC = document.getElementById("optionC").value.trim();
+        const optionD = document.getElementById("optionD").value.trim();
+
+        let correctAnswerIndex = -1;
+        for (let i = 0; i <= 3; i++) {
+          if (document.getElementById(`correctAnswer${i}`).checked) {
+            correctAnswerIndex = i;
+            break;
+          }
+        }
+
+        if (correctAnswerIndex === -1) {
+          alert("Vui lòng chọn đáp án đúng");
+          return;
+        }
+
+        const newQuestion = {
+          question: question,
+          options: [optionA, optionB, optionC, optionD],
+          correctAnswerIndex: correctAnswerIndex,
+        };
+
+        questions.push(newQuestion);
+        updateQuestionList();
+
+        document.getElementById("question").value = "";
+        document.getElementById("optionA").value = "";
+        document.getElementById("optionB").value = "";
+        document.getElementById("optionC").value = "";
+        document.getElementById("optionD").value = "";
+        document.querySelector(
+          'input[name="correctAnswer"]:checked'
+        ).checked = false;
+      }
+
+      function updateQuestionList() {
+        const questionList = document.getElementById("questionList");
+        questionList.innerHTML = "";
+        questions.forEach((q, index) => {
+          const li = document.createElement("li");
+          li.textContent = `${index + 1}. ${q.question}`;
+          questionList.appendChild(li);
+        });
+      }
+
+      function downloadQuestions() {
+        if (questions.length === 0) {
+          alert("Không có câu hỏi để tải xuống");
+          return;
+        }
+
+        const jsonContent = JSON.stringify(questions, null, 2);
+        const blob = new Blob([jsonContent], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "questions.json";
+        a.textContent = "Tải xuống";
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    </script>
+  </body>
 </html>

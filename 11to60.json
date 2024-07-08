@@ -1,0 +1,502 @@
+[
+  {
+    "question": "Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:",
+    "options": [
+      "Ngăn chặn nguy cơ trực tiếp gây mất AT-VSLĐ, hành vi vi phạm quy định AT-VSLĐ tại nơi làm",
+      "Sử dụng máy, thiết bị, vật tư có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động không được kiểm",
+      "Từ chối làm công việc hoặc rời bỏ nơi làm việc khi thấy rõ có nguy cơ xảy ra tai nạn lao động đe",
+      "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc an toàn, vệ sinh, cải thiện điều kiện lao"
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Các hành vi nào sau đây bị nghiêm cấm trong ATVSLĐ:",
+    "options": [
+      "Từ chối làm việc khi thấy rõ nguy cơ xảy ra TNLĐ.",
+      "Khiếu nại, tố cáo với cơ quan Nhà nước khi người sử dụng lao động vi phạm các qui định giao kết",
+      "Làm công việc có yêu cầu nghiêm ngặt về ATVSLĐ khi chưa được huấn luyện, sát hạch và cấp",
+      "Rời bỏ nơi làm việc khi thấy rõ nguy cơ xảy ra TNLĐ và báo cáo với người trực tiếp quản lý biêt lý"
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Luật An toàn, vệ sinh lao động số: 84/2015/QH13 ngày 25/06/2015, Người sử dụng lao  động khi thực hiện trang cấp phương tiện bảo vệ cá nhân phải bảo đảm nguyên tắc nào dưới đây?",
+    "options": [
+      "Đúng chủng loại, đúng đối tượng, đủ số lượng, bảo đảm chất lượng theo tiêu chuẩn, quy chuẩn kỹ  thuật quốc gia;",
+      "Không phát tiền thay cho việc trang cấp phương tiện bảo vệ cá nhân; không buộc NLĐ tự mua  hoặc thu tiền của NLĐ để mua phương tiện bảo vệ cá nhân;",
+      "Hướng dẫn, giám sát người lao động sử dụng phương tiện bảo vệ cá nhân;",
+      "Các câu trả lời a, b và c đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Việc tổ chức kiểm tra, đánh giá các yếu tố nguy hiểm, yếu tố có hại tại nơi làm việc để tiến  hành các biện pháp về công nghệ, kỹ thuật nhằm loại trừ, giảm thiểu yếu tố nguy hiểm, yếu tố có  hại tại nơi làm việc, cải thiện điều kiện lao động, chăm sóc sức khỏe cho người lao động theo quy  định phải diễn ra khi:",
+    "options": [
+      "Khi cần thiết như sự cố, tai nạn nghiêm trọng xảy ra thường xuyên..",
+      "Hàng năm.",
+      "Khi thay đổi công nghệ hoặc môi trường lao động.",
+      "Tất cả các trường hợp nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Trách nhiệm nào sau đây là trách nhiệm chung của cả người lao động và người sử dụng lao  động:",
+    "options": [
+      "Xây dựng, ban hành kế hoạch xử lý sự cố, ứng cứu khẩn cấp tại nơi làm việc; tổ chức xử lý sự cố,  ứng cứu khẩn cấp, lực lượng ứng cứu.",
+      "Ngăn chặn nguy cơ trực tiếp gây mất an toàn, vệ sinh lao động, hành vi vi phạm quy định an toàn,  vệ sinh lao động tại nơi làm việc.",
+      "Tham gia khóa học huấn luyện an toàn, vệ sinh lao động trước khi sử dụng các máy, thiết bị, vật  tư, chất có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động.",
+      "Định kỳ kiểm tra, bảo dưỡng máy, thiết bị, vật tư, chất, nhà xưởng, kho tàng."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Việc bồi dưỡng bằng hiện vật theo nguyên tắc:",
+    "options": [
+      "Giúp tăng cường sức đề kháng và thải độc của cơ thể; Bảo đảm thuận tiện, an toàn, vệ sinh thực  phẩm; Thực hiện trong ca, ngày làm việc, trừ trường hợp đặc biệt do tổ chức lao động không thể  tổ chức bồi dưỡng tập trung tại chỗ.",
+      "Thực hiện theo nhu cầu số đông, những cá nhân không nhận bồi dưỡng bằng hiện vật sẽ được cấp  phát bằng tiền.",
+      "Giúp tăng cường sức khỏe trong những ngày tăng ca.",
+      "Tất cả các nguyên tắc nêu trên."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Khi xảy ra tai nạn lao động, sự cố kỹ thuật gây mất an toàn, vệ sinh lao động tại nơi làm  việc làm chết người thì người sử dụng lao động có trách nhiệm khai báo ngay với:",
+    "options": [
+      "Cơ quan Công an huyện, quận, thị xã, thành phố thuộc tỉnh.",
+      "Cơ quan quản lý nhà nước về lao động cấp tỉnh nơi xảy ra tai nạn.",
+      "Cả a và b.",
+      "Cơ quan quản lý nhà nước về lao động cấp huyện, quận, thị xã, thành phố thuộc tỉnh nơi xảy ra tai  nạn và công an cấp xã."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Trường hợp tai nạn trên đường đi và về từ nơi ở đến nơi làm việc, hồ sơ bắt buộc cơ quan  nhà nước có thẩm quyền có trách nhiệm cung cấp cho đoàn điều tra là:",
+    "options": [
+      "Biên bản khám nghiệm hiện trường và sơ đồ hiện trường vụ tai nạn;",
+      "Biên bản điều tra tai nạn giao thông;",
+      "Văn bản xác nhận bị tai nạn của cơ quan Công an xã, phường, thị trấn nơi xảy ra tai nạn theo đề  nghị của người lao động hoặc thân nhân của người lao động.",
+      "Chỉ cần có biên bản a hoặc b; Nếu không có a hoặc b, phải có văn bản theo trường hợp c."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Tiền lương để làm cơ sở thực hiện các chế độ bồi thường, trợ cấp, tiền lương trả cho người  lao động nghỉ việc do bị tai nạn lao động, bệnh nghề nghiệp được quy định là:",
+    "options": [
+      "Tiền lương bao gồm mức lương, phụ cấp lương và các khoản bổ sung khác thực hiện theo quy định  của pháp luật về lao động.",
+      "Tiền lương cơ bản.",
+      "Tiền lương cơ sở.",
+      "Tiền lương cơ sở và phụ cấp lương."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Trường hợp người lao động bị tai nạn khi đi từ nơi ở đến nơi làm việc hoặc từ nơi làm việc  về nơi ở theo tuyến đường và thời gian hợp lý, nếu do lỗi của người khác gây ra hoặc không xác  định được người gây ra tai nạn thì:",
+    "options": [
+      "Không xét là tai nạn lao động.",
+      "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 12 tháng lương.",
+      "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 40℅ mức tai nạn lao động mà  không hoàn toàn do lỗi của chính người này gây ra.",
+      "Người sử dụng lao động trợ cấp cho người lao động theo quy định là 30 tháng lương."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Mức hưởng trợ cấp, mức hỗ trợ cho người bị tai nạn lao động, bệnh nghề nghiệp được tính  trên cơ sở:",
+    "options": [
+      "Mức suy giảm khả năng lao động.",
+      "Mức đóng vào Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp.",
+      "Thời gian đóng Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp.",
+      "Căn cứ vào tất cả các yếu tố nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động bị tai nạn lao động, bệnh nghề nghiệp được giám định hoặc giám định lại  mức suy giảm khả năng lao động khi thuộc một trong các trường hợp nào sau đây:",
+    "options": [
+      "Sau khi bị thương tật, bệnh tật lần đầu đã được điều trị ổn định còn di chứng ảnh hưởng tới sức  khỏe",
+      "Sau khi thương tật, bệnh tật tái phát đã được điều trị ổn định;",
+      "Thương tật hoặc bệnh nghề nghiệp không có khả năng điều trị ổn định theo quy định của Bộ  trưởng Bộ Y tế thì người lao động được làm thủ tục giám định trước hoặc ngay trong quy trình  điều trị.",
+      "Tất cả các trường hợp nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động bị tai nạn lao động, bệnh nghề nghiệp là đối tượng trợ cấp hàng tháng với  điều kiện là:",
+    "options": [
+      "Người lao động bị suy giảm khả năng lao động từ 21% trở lên.",
+      "Người lao động bị suy giảm khả năng lao động từ 31% trở lên.",
+      "Người lao động bị suy giảm khả năng lao động từ 41% trở lên.",
+      "Người lao động bị suy giảm khả năng lao động từ 51% trở lên."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Mức trợ cấp hàng tháng của Quỹ bảo hiểm tai nạn lao động, bệnh nghề nghiệp được quy  định là:",
+    "options": [
+      "Suy giảm 31% khả năng lao động thì được hưởng bằng 30% mức lương cơ sở, sau đó cứ suy giảm  thêm 1% thì được hưởng thêm 2% mức lương cơ sở;",
+      "Tính theo số năm đã đóng vào Quỹ BHTN, BNN: dưới 1 năm tính bằng 0,5 tháng, sau đó cứ thêm  mỗi năm tính thêm 0,3 tháng tiền lương đóng vào quỹ của tháng liền kề trước tháng bị TNLĐ hoặc  được xác định mắc BNN. Trường hợp bị tai nạn lao động ngay trong tháng đầu tham gia đóng vào  quỹ hoặc có thời gian tham gia gián đoạn sau đó trở lại làm việc thì tiền lương làm căn cứ tính  khoản trợ cấp này là tiền lương của chính tháng đó.",
+      "Được hưởng cả hai khoản trợ cấp a và b.",
+      "Tất cả đều sai."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Mức trợ cấp khi người lao động chết do tai nạn lao động, bệnh nghề nghiệp cho thân nhân  người lao động là:",
+    "options": [
+      "Trợ cấp một lần bằng ba mươi sáu lần mức lương cơ sở tại tháng người lao động bị chết và được  hưởng chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+      "Trợ cấp một lần bằng ba mươi lần mức lương cơ sở tại tháng người lao động bị chết và được  hưởng chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+      "Trợ cấp một lần bằng ba mươi sáu lần mức lương tại tháng người lao động bị chết và được hưởng  chế độ tử tuất theo quy định của Luật bảo hiểm xã hội.",
+      "Trợ cấp một lần bằng ba mươi lần mức lương tại tháng người lao động bị chết và được hưởng chế  độ tử tuất theo quy định của Luật bảo hiểm xã hội."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Căn cứ của việc lập kế hoạch an toàn, vệ sinh lao động là:",
+    "options": [
+      "Đánh giá rủi ro về an toàn, vệ sinh lao động tại nơi làm việc; việc kiểm soát yếu tố nguy hiểm, yếu  tố có hại và kế hoạch ứng cứu khẩn cấp;",
+      "Kết quả thực hiện công tác an toàn, vệ sinh lao động năm trước; Kiến nghị của người lao động, của  tổ chức công đoàn và của đoàn thanh tra, đoàn kiểm tra.",
+      "Nhiệm vụ, phương hướng kế hoạch sản xuất, kinh doanh và tình hình lao động của năm kế hoạch;",
+      "Tất cả các căn cứ nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Các nội dung chủ yếu phải có của Kế hoạch an toàn, vệ sinh lao động là:",
+    "options": [
+      "Biện pháp kỹ thuật an toàn lao động và phòng, chống cháy, nổ; Biện pháp về kỹ thuật vệ sinh lao  động, phòng, chống yếu tố có hại và cải thiện điều kiện lao động;",
+      "Trang cấp phương tiện bảo vệ cá nhân cho người lao động; Chăm sóc sức khỏe người lao động;",
+      "Thông tin, tuyên truyền, giáo dục, huấn luyện về an toàn, vệ sinh lao động.",
+      "Bao gồm các nội dung nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Các nội dung chủ yếu phải có của Kế hoạch ứng cứu khẩn cấp phải có là:",
+    "options": [
+      "Phương án sơ tán người lao động ra khỏi khu vực nguy hiểm; Biện pháp sơ cứu, cấp cứu người bị  nạn; Biện pháp ngăn chặn, khắc phục hậu quả do sự cố gây ra;",
+      "Trang thiết bị phục vụ ứng cứu;",
+      "Lực lượng ứng cứu tại chỗ; phương án phối hợp với các lực lượng bên ngoài cơ sở; phương án  diễn tập.",
+      "Bao gồm các nội dung nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động tham gia bảo hiểm tai nạn lao động, bệnh nghề nghiệp được hưởng chế độ  tai nạn lao động khi hội đủ các điều kiện với mức suy giảm khả năng lao động là:",
+    "options": [
+      "Từ 30℅.",
+      "Trên 30℅.",
+      "Từ 5℅.",
+      "Trên 5℅."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Theo Bộ luật lao động số 45/2019/QH14 ngày 20 tháng 11 năm 2019, Cứ 05 năm làm việc  cho một người sử dụng lao động thì số ngày nghỉ hằng năm của người lao động tăng thêm:",
+    "options": [
+      "Tương ứng 01 ngày.",
+      "Tương ứng 02 ngày.",
+      "Tương ứng 03 ngày.",
+      "Tương ứng 04 ngày."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Thời giờ nghỉ hàng năm tính nguyên lương khi người lao động có đủ 12 tháng làm việc  cho một người sử dụng lao động được quy định là:",
+    "options": [
+      "Nghỉ 12 ngày làm việc đối với người làm công việc trong điều kiện bình thường;",
+      "Nghỉ 14 ngày làm việc đối với người làm công việc nặng nhọc, độc hại, nguy hiểm hoặc người làm  việc ở những nơi có có điều kiện sinh sống khắc nghiệt theo danh mục do Bộ Lao động - Thương  binh và Xã hội chủ trì phối hợp với Bộ Y tế ban hành hoặc lao động chưa thành niên hoặc lao động  là người khuyết tật;",
+      "Nghỉ 16 ngày làm việc đối với người làm công việc đặc biệt nặng nhọc, độc hại, nguy hiểm hoặc  người làm việc ở những nơi có điều kiện sinh sống đặc biệt khắc nghiệt theo danh mục do Bộ Lao  động - Thương binh và Xã hội chủ trì phối hợp với Bộ Y tế ban hành.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Thanh toán tiền lương những ngày chưa nghỉ thực hiện trong các trường hợp nào sau đây:",
+    "options": [
+      "Người lao động do thôi việc, bị mất việc làm mà chưa nghỉ hết số ngày nghỉ hàng năm.",
+      "Người lao động vì lý do người sử dụng lao động không quy định lịch nghỉ hàng năm mà chưa nghỉ  hằng năm.",
+      "Người lao động do thôi việc, bị mất việc làm mà chưa nghỉ hết số ngày nghỉ hàng năm hoặc vì lý  do người sử dụng lao động không quy định lịch nghỉ hàng năm mà chưa nghỉ hằng năm.",
+      "Khi người sử dụng lao động đã quy định đủ số ngày nghỉ hàng năm nhưng người lao động không  muốn nghỉ."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Lao Động nam đang đóng BHXH khi vợ sinh con được nghỉ việc hưởng chế độ thai sản là:",
+    "options": [
+      "05 ngày làm việc nếu sinh thường, 07 ngày làm việc khi vợ sinh con phải phẫu thuật, sinh con dưới  32 tuần tuổi.",
+      "Vợ sinh đôi thì được nghỉ 10 ngày làm việc, từ sinh ba trở lên thì cứ thêm mỗi con được nghỉ thêm  03 ngày làm việc.",
+      "Vợ sinh đôi trở lên mà phải phẫu thuật thì được nghỉ 14 ngày làm việc.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động làm thêm giờ vào ngày nghỉ hàng tuần hoặc ngày lễ được trả lương ít nhất  bằng:",
+    "options": [
+      "120 % của tiền lương giờ của ngày làm việc bình thường.",
+      "150% của tiền lương giờ của ngày làm việc bình thường.",
+      "200 % của tiền lương giờ của ngày làm việc bình thường.",
+      "300 % của tiền lương giờ của ngày làm việc bình thường."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Người lao động làm thêm giờ vào ngày thường được trả lương ít nhất bằng:",
+    "options": [
+      "120 % của tiền lương giờ của ngày làm việc bình thường",
+      "150 % của tiền lương giờ của ngày làm việc bình thường.",
+      "200% của tiền lương giờ của ngày làm việc bình thường.",
+      "300 % của tiền lương giờ của ngày làm việc bình thường."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Người lao động làm việc ban đêm (từ 22g đến 6g) thì được trả thêm ít nhất bằng.",
+    "options": [
+      "30 % của tiền lương làm việc vào ban ngày.",
+      "50 % của tiền lương làm việc vào ban ngày.",
+      "80 % của tiền lương làm việc vào ban ngày.",
+      "100 % của tiền lương làm việc vào ban ngày."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Theo thông tư số: 25/2013/TT-BLĐTBXH  mức bồi dưỡng bằng hiện vật tính theo định  suất hàng ngày có giá trị bằng tiền tương ứng theo các mức nào sau:",
+    "options": [
+      "Mức 1: 10.000 đồng; mức 2: 15.000 đồng; mức 3: 20.000 đồng; mức 4: 25.000 đồng.",
+      "Mức 1: 8.000 đồng; mức 2: 12.000 đồng; mức 3: 16.000 đồng; mức 4: 20.000 đồng.",
+      "Mức 1: 15.000 đồng; mức 2: 20.000 đồng; mức 3: 25.000 đồng; mức 4: 30.000 đồng.",
+      "Mức 1: 12.000 đồng; mức 2: 16.000 đồng; mức 3: 22.000 đồng; mức 4: 26.000 đồng."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "TNLĐ nặng là TNLĐ trong đó nạn nhân có thời gian nghỉ việc:",
+    "options": [
+      "03 ngày.",
+      "07 ngày.",
+      "14 ngày.",
+      "14 ngày trở lên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Mức bồi thường đối với người lao động bị suy giảm khả năng lao động từ 81% trở lên hoặc  bị chết do tai nạn lao động, bệnh nghề nghiệp là:",
+    "options": [
+      "Ít nhất bằng 20 tháng tiền lương và phụ cấp lương (nếu có).",
+      "Ít nhất bằng 30 tháng tiền lương và phụ cấp lương (nếu có).",
+      "Ít nhất bằng 36 tháng tiền lương và phụ cấp lương (nếu có).",
+      "Ít nhất bằng 48 tháng tiền lương và phụ cấp lương (nếu có)."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Khi có TNLĐ hoặc bệnh nghề nghiệp :",
+    "options": [
+      "Người sử dụng lao động phải chịu toàn bộ chi phí y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong  cho người bị TNLĐ hoặc bệnh nghề nghiệp.",
+      "Người sử dụng lao động chỉ chịu toàn bộ chi phí y tế về TNLĐ, người lao động chịu chi phí về bệnh  nghề nghiệp.",
+      "Người  lao động phải chịu toàn bộ chi phí y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong",
+      "Người sử dụng lao động chịu toàn bộ chi phí về y tế từ khi sơ cứu, cấp cứu đến khi điều trị xong cho  người bị TNLĐ mà không do lỗi của người lao động."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Trường hợp xảy ra TNLĐ chết người hoặc nhiều người bị thương nặng thì người sử dụng  lao động phải:",
+    "options": [
+      "Cấp cứu người bị nạn, dọn dẹp hiện trường, báo ngay cho công an.",
+      "Cấp cứu người bị nạn, giữ nguyên hiện trường, báo cáo cho cấp trên.",
+      "Dọn dẹp hiện trường, sửa chữa những chổ bị hư hỏng, báo cáo cho cấp trên.",
+      "Cấp cứu người bị nạn, giữ nguyên hiện trường, báo ngay với Cơ quan Thanh tra Nhà nước về ATLĐ  và cơ quan Công An địa Phương."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Đối tượng nào sau đây phải được cấp phát phương tiện bảo vệ cá nhân:",
+    "options": [
+      "Công nhân chuyên ngành điện, công nhân may, bác sĩ chụp X quang.",
+      "Tạp vụ quét dọn rác, lao công quét dọn đường phố, công nhân xây dựng cầu đường.",
+      "Công nhân cơ khí, công nhân xây dựng, cảnh sát cứu hỏa.",
+      "Tất cả các đối tượng trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động có quyền trong vấn đề trang cấp phương tiện bảo vệ cá nhân:",
+    "options": [
+      "Kiểm tra để đảm bảo chất lượng trước khi cấp mới và định kỳ kiểm tra thử lại sau thời gian sử dụng  các PTBVCN.",
+      "Từ chối những PTBVCN được cấp mà không đảm bảo chất lượng, không đúng tiêu chuẩn quy định.",
+      "Sử dụng các PTBVCN phù hợp với yêu cầu công việc được giao.",
+      "Tất cả các quyền nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Phương tiện bảo vệ cá nhân phải được:",
+    "options": [
+      "Người sử dụng lao động cấp phát miễn phí cho người lao động.",
+      "Bố trí nơi cất giữ bảo quản phương tiện bảo vệ cá nhân theo hướng dẫn của nhà sản xuất, chế tạo  phương tiện bảo vệ cá nhân.",
+      "Trả lại Khi hết thời hạn sử dụng hoặc khi chuyển làm công việc khác nếu người sử dụng lao động  yêu cầu nhưng phải ký bàn giao.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Trang bị PTBVCN đầy đủ để ngăn ngừa tai nạn lao động, bệnh nghề nghiệp phải đảm bảo:",
+    "options": [
+      "Ngăn ngừa có hiệu quả các tác hại của các yếu tố nguy hiểm, độc hại trong môi trường lao động.",
+      "Được sản xuất tại Việt Nam hoặc nhập khẩu theo đúng tiêu chuẩn chất lượng của Nhà nước quy  định.",
+      "Dễ dàng trong sử dụng, bảo quản,không gây tác hại khác.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Các đồ vật nào dưới đây là phương tiện bảo vệ cá nhân cho công nhân ngành điện:",
+    "options": [
+      "Kính bảo vệ mắt, nón bảo hộ, kềm ép dây thủy lực, găng tay cách điện.",
+      "Kính bảo vệ mắt, nón bảo hộ, hộp chống ngã cao, găng tay cách điện.",
+      "Giày bảo hộ, ty leo, biển báo an toàn, các loại khóa vòng, cờ lê mỏ lếch.",
+      "Xe gàu cách điện, sào cách điện, vải bạt cách điện, kích căng dây."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Nón bảo hộ trong ngành điện có khả năng:",
+    "options": [
+      "Sử dụng tham gia giao thông bảo vệ đầu.",
+      "Giảm lực xung kích khi va đập và cách điện.",
+      "Giảm  lực xung kích khi va đập.",
+      "Cách điện."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Việc trang bị phương tiện bảo vệ cá nhân cho người lao động có mục đích:",
+    "options": [
+      "Hạn chế các yếu tố nguy hiểm và có hại tác động đến thân thể, sức khoẻ của người lao động.",
+      "Bảo vệ người lao động không bị tai nạn lao động và bệnh nghề nghiệp.",
+      "Để đảm bảo an toàn, vệ sinh khi tham gia sản xuất.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Người lao động có nghĩa vụ trong an toàn lao động-vệ sinh lao động là:",
+    "options": [
+      "Chấp hành qui định, nội qui về ATLĐ; phải sử dụng và bảo quản các phương tiện bảo vệ cá nhân;  phải báo cáo kịp thời với người có trách nhiệm khi phát hiện nguy cơ gây TNLĐ, bệnh nghề nghiệp.",
+      "Đi làm đúng giờ; sử dụng các trang cụ AT-BHLĐ, sẳn sàng làm thêm giờ khi có yêu cầu, báo cáo  với cấp trên các hư hỏng, khắc phục sự cố khi phát hiện có sự cố.",
+      "Chấp hành mệnh lệnh cấp trên vô điều kiện, bảo quản các dụng cụ đồ nghề, vệ sinh nơi làm việc,  tham gia cấp cứu và khắc phục hậu quản TNLĐ.",
+      "Tất cả đều đúng."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Người lao động có quyền:",
+    "options": [
+      "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc An toàn, vệ sinh; xin tăng lương, không  làm thêm ngoài giờ, lựa chọn công việc mình yêu thích.",
+      "Yêu cầu người sử dụng lao động bảo đảm điều kiện làm việc an toàn, vệ sinh, cải thiện điều kiện lao  động, cung cấp đầy đủ phương tiện bảo vệ cá nhân, huấn luyện, thực hiện biện pháp an toàn lao  động, VSLĐ; từ chối làm việc khi thấy rõ nguy cơ xảy ra TNLĐ; khiếu nại, tố cáo với cơ quan Nhà  nước khi người sử dụng lao động vi phạm các qui định giao kết về ATLĐ, VSLĐ.",
+      "Yêu cầu người sử dụng lao động huấn luyện các biện pháp ATTLĐ, rời bỏ nơi làm việc khi thấy rõ  nguy cơ xảy ra TNLĐ, phê bình cấp trên khi thấy có các qui định, thông báo không có lợi cho người  lao động.",
+      "Từ chối làm thêm giờ trong bất cứ trường hợp nào."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Người sử dụng lao động có các quyền:",
+    "options": [
+      "Cắt giảm lương người lao động, bắt người lao động phải làm thêm giơ, khiếu nại với các cơ quan  Nhà nước về các quyết định của Thanh tra viên lao động.",
+      "Cho người lao động nghĩ việc, bắt người lao động phải chấp hành các qui định nội qui, biện pháp an  toàn lao động, VSLĐ, khen thưởng những người làm tốt, không giải quyết những yêu cầu, phản ảnh  của người lao động.",
+      "Buộc người lao động phải tuân thủ các qui định, nội qui, biện pháp ATLĐ, VSLĐ; khen thưởng  người chấp hành tốt và kỷ luật người vi phạm trong việc thực hiện ATLĐ, VSLĐ; khiếu nại với cơ  quan nhà nước có thẩm quyền về quyết định của Thanh tra viên lao động về ATLĐ, VSLĐ.",
+      "Bắt người lao động phải chấp hành các qui định, nội qui, biện pháp ATLĐ, VSLĐ, bắt người lao  động làm thêm giờ, được quyền bắt nạt, đánh đập người lao động khi họ làm hư sản phẩm, giải thể  các tổ chức Công Đoàn trong đơn vị bênh vực quyền lợi của người lao động."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Phát biểu nào sau đây là đúng:",
+    "options": [
+      "Để bồi dưỡng người lao động phục hồi sức khỏe và thải chất độc ra khỏi cơ thể, người sử dụng lao  động có thể chọn một trong hai hình thức là bồi dưỡng bằng tiền hoặc hiện vật.",
+      "Người sử dụng lao động có trách nhiệm trang bị lại cho người lao động phương tiện bảo vệ cá nhân  khi bị mất có lý do chính đáng, hư hỏng hoặc hết hạn sử dụng.",
+      "Nội quy lao động của cơ quan là pháp lý của từng công ty để ràng buộc người lao động.",
+      "Điều kiện lao động là công cụ để người lao động sản xuất ra sản phẩm."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Phát biểu nào sau đây là sai:",
+    "options": [
+      "Người sử dụng lao động phải trả đủ tiền lương theo hợp đồng lao động cho người lao động bị tai  nạn lao động, bệnh nghề nghiệp phải nghỉ việc trong thời gian điều trị.",
+      "Người sử dụng lao động có quyền sử dụng người lao động làm thêm giờ mà không cần phải có sự  đồng ý của người lao động.",
+      "Người lao động được trang bị phương tiện bảo vệ cá nhân thì bắt buộc phải sử dụng;",
+      "Trong thời gian mang thai, nghỉ hưởng chế độ khi sinh con, nuôi con dưới 12 tháng tuổi, lao động  nữ không bị xử lý kỷ luật lao động."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Phát biểu nào sau đây là sai:",
+    "options": [
+      "Việc huấn luyện an toàn lao động, vệ sinh lao động cho đối tượng nhóm 4 theo nghị định  44/2016/NĐ-CP (điều 21.2) ít nhất mỗi năm một lần.",
+      "Tính chất của công tác bảo hộ lao động là tính pháp luật, tính khoa học kỹ thuật và tính quần chúng.",
+      "Khi xảy ra tai nạn lao động, nếu lỗi xảy ra hoàn toàn do người lao động thì người sử dụng lao động  có quyền đơn phương chấm dứt hợp đồng với người lao động.",
+      "Người sử dụng lao động có quyền Tuyển dụng, bố trí, điều hành lao động theo nhu cầu sản xuất, kinh  doanh; khen thưởng và xử lý vi phạm kỷ luật lao động."
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "question": "Phát biểu nào sau đây là sai:",
+    "options": [
+      "Quy trình làm việc an toàn là quy trình trình bày tất cả các quy định về an toàn lao động, để đảm bảo  an toàn cho trong hoạt động sản xuất kinh doanh.",
+      "Nếu phát hiện trang thiết bị an toàn và bảo hộ lao động có dấu hiệu hư hỏng,  phải báo cáo với người  quản lý biết nhưng vẫn phải tiếp tục làm công việc theo mệnh lệnh.",
+      "Dụng cụ và thiết bị cho công việc sửa chữa có điện phải được kiểm tra định kỳ theo tiêu chuẩn và  bảo dưỡng, bảo quản theo quy định.",
+      "Các dụng cụ và trang thiết bị an toàn điện phải đạt được các tiêu chuẩn thử nghiệm và sử dụng."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Trong các yếu tố sau đây, yếu tố nào là yếu tố nguy hiểm trong lao động?",
+    "options": [
+      "Làm việc trên cao; nguồn điện; bụi; vật văng, bắn.",
+      "Làm việc trên cao; nguồn điện; vật rơi, đổ, sập; vật văng, bắn.",
+      "Làm việc trên cao; nguồn điện; vật rơi, đổ, sập; hóa chất độc.",
+      "Làm việc trên cao; nguồn điện; vi khí hậu; vật văng, bắn."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Các yếu tố nguy hiểm gây chấn thương trong lao động là:",
+    "options": [
+      "Những yếu tố gây tai nạn lao động hoặc bệnh cho người lao động.",
+      "Là những yếu tố điều kiện lao động xấu, có nguy cơ gây ra tai nạn lao động.",
+      "Là những yếu tố điều kiện lao động xấu đã xảy gây ra tai nạn lao động.",
+      "Là những có khả năng rơi, đổ sập hoặc văng bắn vào người lao động."
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "question": "Các yếu tố nào sau đây là yếu tố nguy hiểm:",
+    "options": [
+      "Dây dẫn đang căng ở vị trí góc- Điện cao áp- Hồ quang điện- Gãy, đổ trụ",
+      "Môi trường làm việc: tần số cao- điện từ trường vượt qua giới hạn cho phép.",
+      "Làm việc trong môi trường ẩm ướt, chật hẹp, thiếu dưỡng khí.",
+      "Môi trường làm việc có các vi sinh vật gây bệnh."
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "question": "Khi làm việc trên cao, yếu tố nguy hiểm có thể xuất hiện khi đứng trên trụ là:",
+    "options": [
+      "Động vật nguy hiểm, ngã cao, gãy đổ trụ",
+      "Sét, điện giật, phóng điện.",
+      "Dây dẫn trụ góc văng bắn vào người, điện từ trường, say nắng.",
+      "Tất cả các trường hợp nêu trên."
+    ],
+    "correctAnswerIndex": 3
+  },
+  {
+    "question": "Trong các yếu tố sau đây, yếu tố nào ảnh hưởng đến vi khí hậu?",
+    "options": [
+      "Nhiệt độ, độ ẩm, tốc độ gió, bức xạ nhiệt.",
+      "Chất phóng xạ, hơi khí độc, tiếng ồn, rung.",
+      "Nhiệt độ, tiếng ồn, bụi, độ ẩm, tốc độ gió.",
+      "Bụi, tiếng ồn, ánh sáng, nhiệt độ, độ ẩm, bức xạ nhiệt."
+    ],
+    "correctAnswerIndex": 0
+  }
+]
