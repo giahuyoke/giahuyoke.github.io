@@ -22,7 +22,7 @@
     input[type="text"], input[type="date"] {
       width: 100%; padding: 0.4em; box-sizing: border-box;
     }
-    /* Textarea QA mở rộng gấp đôi */
+    /* Textbox QA mở rộng gấp đôi */
     textarea { 
       width: 100%; 
       padding: 0.4em; 
@@ -47,11 +47,19 @@
       padding: 1em; 
       width: 90%; 
       max-width: 600px;
-      max-height: 80vh; /* Giới hạn chiều cao tối đa */
-      overflow-y: auto; /* Thêm thanh cuộn nếu nội dung quá dài */
+      max-height: 80vh; /* Giới hạn chiều cao tối đa cho popup */
+      overflow-y: auto;
       border-radius: 4px; 
       white-space: pre-wrap;
     }
+    /* Nút Copy và Đóng trên cùng 1 dòng */
+    #modalButtons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 1em;
+    }
+    /* Ticket list */
     #ticketList { margin-top: 1em; }
     .ticket-item {
       background: #e0e0e0; padding: 0.5em; margin-bottom: 0.5em;
@@ -71,6 +79,25 @@
       cursor: pointer;
       margin-left: 5px;
     }
+    /* Dropdown gợi ý cho tìm kiếm ticket */
+    #searchSuggestions {
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      background: #fff;
+      position: absolute;
+      width: calc(100% - 2px);
+      z-index: 100;
+    }
+    .search-suggestion {
+      padding: 0.5em;
+      cursor: pointer;
+    }
+    .search-suggestion:hover {
+      background: #f0f0f0;
+    }
+    /* Đặt thanh tìm kiếm ở bên trên bộ chọn ngày */
+    #searchContainer { position: relative; margin-bottom: 1em; }
   </style>
 </head>
 <body>
@@ -128,16 +155,17 @@
       </div>
     </div>
 
-    <!-- Sidebar: Bộ chọn ngày, thanh tìm kiếm & danh sách ticket -->
+    <!-- Sidebar: Thanh tìm kiếm ticket, bộ chọn ngày & danh sách ticket -->
     <div id="sidebar">
       <h3>Danh sách ticket</h3>
+      <div id="searchContainer">
+        <label for="ticketSearch">Tìm kiếm ticket:</label>
+        <input type="text" id="ticketSearch" placeholder="Nhập mã ticket...">
+        <div id="searchSuggestions"></div>
+      </div>
       <div class="form-group">
         <label for="filterDate">Chọn ngày:</label>
         <input type="date" id="filterDate">
-      </div>
-      <div class="form-group">
-        <label for="ticketSearch">Tìm kiếm ticket:</label>
-        <input type="text" id="ticketSearch" placeholder="Nhập mã ticket...">
       </div>
       <div id="ticketList"></div>
       <button id="exportReportBtn" style="margin-top:1em;">Xuất Report</button>
@@ -149,8 +177,11 @@
   <div id="modal">
     <div id="modalContent">
       <div id="modalText"></div>
-      <button id="copyModalBtn" style="margin-top:1em;">Copy</button>
-      <button id="closeModalBtn" style="margin-top:1em;">Đóng</button>
+      <!-- Nút Copy và Đóng cùng dòng -->
+      <div id="modalButtons">
+        <button id="copyModalBtn">Copy</button>
+        <button id="closeModalBtn">Đóng</button>
+      </div>
     </div>
   </div>
 
@@ -160,7 +191,7 @@
     let editRecordId = null;
     let records = [];
 
-    // Khởi tạo ngày mặc định (hôm nay) cho bộ chọn ở sidebar
+    // Khởi tạo ngày mặc định ở sidebar (hôm nay)
     const filterDateElem = document.getElementById("filterDate");
     const todayStr = new Date().toISOString().split("T")[0];
     filterDateElem.value = todayStr;
@@ -173,8 +204,9 @@
     const modal = document.getElementById("modal");
     const modalText = document.getElementById("modalText");
     const ticketList = document.getElementById("ticketList");
+    const searchSuggestions = document.getElementById("searchSuggestions");
 
-    // Chuyển đổi giữa các form
+    // Chuyển đổi giữa form Fixed và QA
     function switchMode(mode) {
       currentMode = mode;
       if(mode === "fixed"){
@@ -193,7 +225,7 @@
     btnFixed.addEventListener("click", () => switchMode("fixed"));
     btnQA.addEventListener("click", () => switchMode("qa"));
 
-    // Popup modal: Hiển thị nội dung và cho phép copy
+    // Popup modal: Hiển thị nội dung, Copy và Đóng trên cùng dòng
     function showModal(text) {
       modalText.textContent = text;
       modal.style.display = "flex";
@@ -208,7 +240,7 @@
         .catch(err => alert("Lỗi khi copy: " + err));
     });
 
-    // Lưu dữ liệu vào localStorage (giống cơ sở dữ liệu)
+    // Lưu và load từ localStorage (giống cơ sở dữ liệu)
     function saveToStorage() {
       localStorage.setItem("records", JSON.stringify(records));
     }
@@ -218,7 +250,7 @@
     }
     loadFromStorage();
 
-    // Định dạng ngày theo yyyy/MM/dd
+    // Hàm định dạng ngày theo yyyy/MM/dd
     function formatDate(date) {
       const d = new Date(date);
       const yyyy = d.getFullYear();
@@ -226,8 +258,12 @@
       const dd = ("0" + d.getDate()).slice(-2);
       return `${yyyy}/${mm}/${dd}`;
     }
+    // Hàm chuyển đổi đổi từ yyyy/MM/dd sang yyyy-MM-dd để gán cho input type=date
+    function convertSlashToDash(dateStr) {
+      return dateStr.replace(/\//g, "-");
+    }
 
-    // Clear form theo mode hiện tại
+    // Clear form
     function clearForm() {
       editRecordId = null;
       if(currentMode === "fixed"){
@@ -245,7 +281,7 @@
     document.getElementById("clearFixedBtn").addEventListener("click", clearForm);
     document.getElementById("clearQABtn").addEventListener("click", clearForm);
 
-    // Lưu record theo mode Fixed hoặc QA
+    // Lưu record (nếu đang edit thì cập nhật, ngược lại thêm mới)
     function saveRecord() {
       let record = {};
       const now = new Date();
@@ -254,7 +290,7 @@
         const ticket = document.getElementById("fixedTicket").value.trim();
         if(!ticket) { alert("Mã ticket không được để trống!"); return; }
         record = {
-          id: editRecordId || Date.now(),
+          id: editRecordId ? editRecordId : Date.now(),
           type: "fixed",
           ticket,
           date: dateStr,
@@ -278,7 +314,7 @@
         if(!ticket) { alert("Mã ticket không được để trống!"); return; }
         const qaContent = document.getElementById("qaContent").value.trim();
         record = {
-          id: editRecordId || Date.now(),
+          id: editRecordId ? editRecordId : Date.now(),
           type: "qa",
           ticket,
           date: dateStr,
@@ -292,9 +328,12 @@
                    + `(QA được lưu vào file: ${record.qaFilename})`;
         showModal(output);
       }
-      const idx = records.findIndex(r => r.id === record.id);
-      if(idx >= 0) {
-        records[idx] = record;
+      // Nếu editRecordId đã có thì cập nhật, còn không thì thêm mới
+      if(editRecordId){
+        const idx = records.findIndex(r => r.id === editRecordId);
+        if(idx >= 0) {
+          records[idx] = record;
+        }
       } else {
         records.push(record);
       }
@@ -305,7 +344,7 @@
     document.getElementById("saveFixedBtn").addEventListener("click", saveRecord);
     document.getElementById("saveQABtn").addEventListener("click", saveRecord);
 
-    // Cập nhật danh sách ticket theo ngày và theo từ khóa tìm kiếm
+    // Cập nhật danh sách ticket theo ngày và tìm kiếm
     function updateTicketList() {
       const selectedDate = formatDate(filterDateElem.value);
       const searchQuery = document.getElementById("ticketSearch").value.trim().toLowerCase();
@@ -321,7 +360,7 @@
           const div = document.createElement("div");
           div.className = "ticket-item";
           
-          // Span hiển thị tên ticket, khi click sẽ hiển thị popup
+          // Span hiển thị tên ticket, click vào sẽ hiện popup
           const span = document.createElement("span");
           span.textContent = `GCSAP-${r.ticket} (${r.type})`;
           span.addEventListener("click", () => {
@@ -346,7 +385,7 @@
           });
           div.appendChild(span);
 
-          // Nút Edit – khi click sẽ load record lên form để chỉnh sửa
+          // Nút Edit – click sẽ đổ thông tin record lên form (chỉ edit, không thêm mới)
           const btnEdit = document.createElement("button");
           btnEdit.textContent = "Sửa";
           btnEdit.addEventListener("click", (e) => {
@@ -371,10 +410,30 @@
       }
     }
     filterDateElem.addEventListener("change", updateTicketList);
-    document.getElementById("ticketSearch").addEventListener("input", updateTicketList);
+    document.getElementById("ticketSearch").addEventListener("input", handleTicketSearch);
     updateTicketList();
 
-    // Load record để chỉnh sửa (sau khi click nút Sửa)
+    // Hàm xử lý tìm kiếm ticket và hiển thị gợi ý dạng dropdown
+    function handleTicketSearch() {
+      const query = document.getElementById("ticketSearch").value.trim().toLowerCase();
+      searchSuggestions.innerHTML = "";
+      if(query === "") return;
+      const suggestions = records.filter(r => r.ticket.toLowerCase().includes(query));
+      suggestions.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "search-suggestion";
+        div.textContent = `GCSAP-${r.ticket} (${r.date})`;
+        div.addEventListener("click", () => {
+          // Khi click vào suggestion, cập nhật bộ chọn ngày theo ngày của ticket đó
+          filterDateElem.value = convertSlashToDash(r.date);
+          searchSuggestions.innerHTML = "";
+          updateTicketList();
+        });
+        searchSuggestions.appendChild(div);
+      });
+    }
+
+    // Load record để chỉnh sửa – khi nhấn nút "Sửa"
     function loadRecord(id) {
       const record = records.find(r => r.id === id);
       if(!record) return;
@@ -426,7 +485,7 @@
       showModal(report);
     });
 
-    // Xuất CSV (nếu hỗ trợ File System Access API thì ghi trực tiếp, nếu không download)
+    // Xuất CSV (File System Access API nếu hỗ trợ, nếu không tải file về)
     document.getElementById("exportCSVBtn").addEventListener("click", async () => {
       let csvContent = "Type,Date,Ticket,EvidenceFile,EvidenceSheet,RevisionFE,RevisionBE,Link,QAFilename\n";
       records.forEach(r => {
