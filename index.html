@@ -377,8 +377,7 @@
         };
         let output = `${record.ticket}\n\nEm gửi QA\n\n`
                    + `Link ticket: ${record.link}\n\n`
-                   + `Nội dung QA: ${record.qaContent}\n\n`
-                   + `(QA được lưu vào file: ${record.qaFilename})`;
+                   + `${record.qaContent}\n\n`
         showModal(output);
       }
       // Cập nhật record nếu đang edit, ngược lại thêm mới.
