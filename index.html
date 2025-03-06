@@ -19,8 +19,10 @@
     .tab-buttons button.active { background: #005999; }
     .form-group { margin-bottom: 1em; }
     label { display: block; margin-bottom: 0.3em; }
-    input[type="text"], input[type="date"] {
-      width: 100%; padding: 0.4em; box-sizing: border-box;
+    input[type="text"], input[type="date"], select {
+      width: 100%; 
+      padding: 0.4em; 
+      box-sizing: border-box;
     }
     /* Textbox QA mở rộng gấp đôi */
     textarea { 
@@ -52,7 +54,7 @@
       border-radius: 4px; 
       white-space: pre-wrap;
     }
-    /* Nút Copy và Đóng trên cùng dòng */
+    /* Nút Copy và Đóng trên cùng dòng trong popup */
     #modalButtons {
       display: flex;
       justify-content: flex-end;
@@ -112,6 +114,39 @@
       
       <!-- Form cho Fixed -->
       <div id="fixedForm">
+        <!-- Đưa 2 dropdown lên đầu -->
+        <div class="form-group">
+          <label for="causeSelect">Nguyên nhân (VN)</label>
+          <select id="causeSelect">
+            <option value="">-- Chọn Nguyên nhân --</option>
+            <option value="レイアウトが設計書に沿って正しく実装されていない。">Code layout khác thiết kế</option>
+            <option value="ロジックが設計書に沿って正しく実装されていない。">Code logic sai thiết kế</option>
+            <option value="バリデーションの不正/不足。">Thiếu/sai validation</option>
+            <option value="共通xxxxxxのエラー。">Common xxxxxx bị lỗi</option>
+            <option value="テストデータの不正。">Data test bị sai</option>
+            <option value="設計書の誤り。">Thiết kế sai</option>
+            <option value="機能が正しく実装されていない。">Chức năng, function chưa được code</option>
+            <option value="QAの関係で未修正/未回答">QA chưa fix/chưa trả lời</option>
+            <option value="テストケースが設計の記載と不一致で、最新の設計書はQAのご回答の通りにまだ更新されていない。">Testcase sai so với design, chưa update design mới nhất theo QA</option>
+            <option value="不具合を再現できない。">Không tái hiện được bug</option>
+            <option value="設計書の認識誤り。">Hiểu sai thiết kế</option>
+            <option value="1次開発対象の不具合。">Lỗi từ phase trước</option>
+            <option value="実装の不正。">code sai</option>
+            <option value="レイアウトの不具合ですが、設計書には記載されていない。">Lỗi layout nhưng không được đề cập trong thiết kế.</option>
+            <option value="仕様変更対応。">Tài liệu thiết kế thay đổi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="solutionSelect">Cách đối ứng (VN)</label>
+          <select id="solutionSelect">
+            <option value="">-- Chọn Cách đối ứng --</option>
+            <option value="設計書に沿ってコードを修正致しました。">Sửa theo thiết kế</option>
+            <option value="設計書に沿って機能を実装致しました。">Code function theo thiết kế</option>
+            <option value="No.XXのQAを対応致しました。">Đối ứng QA No.XX</option>
+            <option value="テストケースの記載に沿ってコードを修正致しました。">Sửa code theo testcase</option>
+            <option value="設計書の最新版に従って修正致しました。">Sửa theo thiết kế mới cập nhật.</option>
+          </select>
+        </div>
         <div class="form-group">
           <label for="fixedTicket">Mã ticket</label>
           <input type="text" id="fixedTicket">
@@ -242,7 +277,7 @@
         .catch(err => alert("Lỗi khi copy: " + err));
     });
 
-    // Lưu và Load dữ liệu vào localStorage (giống cơ sở dữ liệu)
+    // Lưu và load dữ liệu vào localStorage (giống cơ sở dữ liệu)
     function saveToStorage() {
       localStorage.setItem("records", JSON.stringify(records));
     }
@@ -276,6 +311,8 @@
         document.getElementById("fixedEvidenceSheet").value = "";
         document.getElementById("fixedCommitFE").value = "";
         document.getElementById("fixedCommitBE").value = "";
+        document.getElementById("causeSelect").selectedIndex = 0;
+        document.getElementById("solutionSelect").selectedIndex = 0;
       } else {
         document.getElementById("qaTicket").value = "";
         document.getElementById("qaLink").value = "";
@@ -311,11 +348,13 @@
           evidenceFile: document.getElementById("fixedEvidenceFile").value.trim(),
           evidenceSheet: document.getElementById("fixedEvidenceSheet").value.trim(),
           revisionFE: document.getElementById("fixedCommitFE").value.trim(),
-          revisionBE: document.getElementById("fixedCommitBE").value.trim()
+          revisionBE: document.getElementById("fixedCommitBE").value.trim(),
+          cause: document.getElementById("causeSelect").value,
+          solution: document.getElementById("solutionSelect").value
         };
         let output = `${record.date} [SYSEXE_VN]\n`
-                   + `■  原因調査：ロジックが設計書に沿って正しく実装されていない。\n`
-                   + `■  対応方法：設計書に沿って機能を実装致しました。\n`
+                   + `■ 原因調査：${record.cause ? record.cause : ""}\n`
+                   + `■ 対応方法：${record.solution ? record.solution : ""}\n`
                    + `■ エビデンス：\n`
                    + `   ・ファイル： ${record.evidenceFile}\n`
                    + `   ・シート： ${record.evidenceSheet}\n`
@@ -342,7 +381,7 @@
                    + `(QA được lưu vào file: ${record.qaFilename})`;
         showModal(output);
       }
-      // Nếu đang edit, cập nhật record; nếu không thì thêm mới.
+      // Cập nhật record nếu đang edit, ngược lại thêm mới.
       if(editRecordId){
         const idx = records.findIndex(r => r.id === editRecordId);
         if(idx >= 0) {
@@ -380,8 +419,8 @@
           span.addEventListener("click", () => {
             if(r.type === "fixed") {
               let output = `${r.date} [SYSEXE_VN]\n`
-                         + `■  原因調査：ロジックが設計書に沿って正しく実装されていない。\n`
-                         + `■  対応方法：設計書に沿って機能を実装致しました。\n`
+                         + `■ 原因調査：${r.cause ? r.cause : ""}\n`
+                         + `■ 対応方法：${r.solution ? r.solution : ""}\n`
                          + `■ エビデンス：\n`
                          + `   ・ファイル： ${r.evidenceFile}\n`
                          + `   ・シート： ${r.evidenceSheet}\n`
@@ -399,7 +438,7 @@
           });
           div.appendChild(span);
 
-          // Nút Edit – khi click, đổ thông tin record lên form để chỉnh sửa
+          // Nút Edit – đổ thông tin record lên form (chỉ chỉnh sửa, không thêm mới)
           const btnEdit = document.createElement("button");
           btnEdit.textContent = "Sửa";
           btnEdit.addEventListener("click", (e) => {
@@ -427,7 +466,7 @@
     document.getElementById("ticketSearch").addEventListener("input", handleTicketSearch);
     updateTicketList();
 
-    // Xử lý tìm kiếm ticket và hiển thị gợi ý dạng dropdown
+    // Xử lý tìm kiếm ticket: hiển thị dropdown gợi ý theo từ khoá
     function handleTicketSearch() {
       const query = document.getElementById("ticketSearch").value.trim().toLowerCase();
       searchSuggestions.innerHTML = "";
@@ -459,6 +498,8 @@
         document.getElementById("fixedEvidenceSheet").value = record.evidenceSheet;
         document.getElementById("fixedCommitFE").value = record.revisionFE;
         document.getElementById("fixedCommitBE").value = record.revisionBE;
+        document.getElementById("causeSelect").value = record.cause || "";
+        document.getElementById("solutionSelect").value = record.solution || "";
         document.getElementById("cancelEditFixedBtn").style.display = "inline-block";
         document.getElementById("cancelEditQABtn").style.display = "none";
       } else {
@@ -503,7 +544,7 @@
       showModal(report);
     });
 
-    // Xuất CSV (nếu hỗ trợ File System Access API thì ghi trực tiếp, nếu không tải file)
+    // Xuất CSV (nếu trình duyệt hỗ trợ File System Access API thì ghi trực tiếp, nếu không tải file)
     document.getElementById("exportCSVBtn").addEventListener("click", async () => {
       let csvContent = "Type,Date,Ticket,EvidenceFile,EvidenceSheet,RevisionFE,RevisionBE,Link,QAFilename\n";
       records.forEach(r => {
