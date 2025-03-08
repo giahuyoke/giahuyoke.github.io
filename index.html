@@ -428,10 +428,9 @@
                          + `   ・バックエンド： ${r.revisionBE ? r.revisionBE : "修正なし"}`;
               showModal(output);
             } else {
-              let output = `${r.ticket}\n\nEm gửi QA\n\n`
-                         + `Link ticket: ${r.link}\n\n`
-                         + `Nội dung QA: ${r.qaContent}\n\n`
-                         + `(QA được lưu vào file: ${r.qaFilename})`;
+              let output = `${r.ticket}\n\nEm gửi QA`
+                         + `${r.link}\n\n`
+                         + `Nội dung QA: ${r.qaContent}`;
               showModal(output);
             }
           });
